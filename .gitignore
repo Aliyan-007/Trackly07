@@ -1,7 +1,8 @@
 node_modules
 dist
-.env.local
 .env
+.env.local
+.env.*.local
 *.tsbuildinfo
 
 # Local Netlify folder
