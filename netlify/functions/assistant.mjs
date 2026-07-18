@@ -3,8 +3,8 @@ const json=(statusCode,body)=>({statusCode,headers:{'Content-Type':'application/
 export const handler=async(event)=>{
   if(event.httpMethod!=='POST')return json(405,{error:'Method not allowed.'});
   try{
-    const url=process.env.AI_API_URL?.trim(),key=process.env.AI_API_KEY?.trim(),model=process.env.AI_MODEL?.trim();
-    if(!url||!key||!model)return json(503,{error:'AI is not configured. Add AI_API_URL, AI_API_KEY, and AI_MODEL in Netlify environment variables, then redeploy.'});
+    const url=process.env.AI_API_URL?.trim(),key=process.env.AI_API_KEY?.trim(),model=process.env.AI_MODEL?.trim()||'llama-3.3-70b-versatile';
+    if(!url||!key)return json(503,{error:'AI is not configured. Add AI_API_URL, AI_API_KEY, and AI_MODEL in Netlify environment variables, then redeploy.'});
     const {messages=[],context={},mode='general'}=JSON.parse(event.body||'{}');
     const instruction=mode==='timetable'
       ? 'Reply ONLY with valid JSON in this exact format: {"message":"short explanation","changes":[{"title":"string","day":0,"start":"HH:MM","end":"HH:MM","kind":"study","color":"#54a580"}]}. day is 0 Sunday through 6 Saturday. Include only new sessions to add; never invent fixed classes.'
