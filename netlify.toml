@@ -2,6 +2,11 @@
   command = "npm run build"
   publish = "dist"
 
+[build.environment]
+  # These values are public configuration or non-sensitive provider metadata.
+  # Keep AI_API_KEY scanned so a real credential still fails the build if exposed.
+  SECRETS_SCAN_OMIT_KEYS = "AI_API_URL,AI_MODEL,VITE_SUPABASE_ANON_KEY,VITE_SUPABASE_URL"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
