@@ -2,10 +2,13 @@
   command = "npm run build"
   publish = "dist"
 
+[build.environment]
+  SECRETS_SCAN_OMIT_KEYS = "VITE_SUPABASE_URL,VITE_SUPABASE_ANON_KEY"
+
+[functions]
+  directory = "netlify/functions"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-
-[functions]
-  directory = "netlify/functions"
