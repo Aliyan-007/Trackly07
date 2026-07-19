@@ -88,3 +88,15 @@ html[data-theme='dark'] .journal-full .journal-hero,html[data-theme='dark'] .jou
 }
 @media(max-width:390px){.page-content{padding-left:11px!important;padding-right:11px!important}.page-content>header{margin-left:-11px;margin-right:-11px;padding-left:11px;padding-right:11px}.page-content>header h1{font-size:25px!important}.calendar-views button{padding:7px 9px;font-size:12px}.auth-panel{padding:21px 16px!important}.journal-full{padding:11px!important}}
 @media(min-width:761px) and (max-width:1024px){.page-content{padding:34px 28px 72px!important}.desktop-sidebar{width:210px!important}.app-shell main{margin-left:210px!important;width:calc(100% - 210px)!important}}
+.ai-result{margin-top:14px;max-height:230px;overflow:auto;padding:12px;border-radius:10px;background:color-mix(in srgb,var(--t-primary,#222) 7%,var(--t-surface,#fff));font-size:13px;line-height:1.55;white-space:pre-wrap}.global-ai,.page-ai{display:none!important}
+/* Mobile scroll affordances: keep wide controls reachable without clipping content. */
+@media(max-width:760px){
+  html,body,#root{overflow-y:auto!important;-webkit-overflow-scrolling:touch}
+  .page-content{overflow-x:hidden;overflow-y:visible}
+  .calendar-actions,.calendar-views,.theme-picker,.mobile-nav{overflow-x:auto!important;scrollbar-width:thin;scrollbar-color:var(--t-primary,#777) transparent}
+  .notes-list,.journal-list,.ai-scroll,.ai-result{overflow-y:auto!important;scrollbar-width:thin;scrollbar-color:var(--t-primary,#777) transparent}
+  .timetable-card,.month-view{overflow-x:auto!important;scrollbar-width:thin;scrollbar-color:var(--t-primary,#777) transparent}
+  .calendar-actions::-webkit-scrollbar,.calendar-views::-webkit-scrollbar,.theme-picker::-webkit-scrollbar,.mobile-nav::-webkit-scrollbar,.timetable-card::-webkit-scrollbar,.month-view::-webkit-scrollbar{height:5px}
+  .notes-list::-webkit-scrollbar,.journal-list::-webkit-scrollbar,.ai-scroll::-webkit-scrollbar,.ai-result::-webkit-scrollbar{width:5px}
+  .calendar-actions::-webkit-scrollbar-thumb,.calendar-views::-webkit-scrollbar-thumb,.theme-picker::-webkit-scrollbar-thumb,.mobile-nav::-webkit-scrollbar-thumb,.timetable-card::-webkit-scrollbar-thumb,.month-view::-webkit-scrollbar-thumb,.notes-list::-webkit-scrollbar-thumb,.journal-list::-webkit-scrollbar-thumb,.ai-scroll::-webkit-scrollbar-thumb,.ai-result::-webkit-scrollbar-thumb{background:var(--t-primary,#777);border-radius:99px}
+}
