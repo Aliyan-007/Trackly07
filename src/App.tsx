@@ -16,6 +16,7 @@ import { ResetPassword } from './pages/ResetPassword';
 import { AppLayout } from './layouts/AppLayout';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { useTracklyStore } from './stores/useTracklyStore';
+import type {AppTheme} from './themes/themeConfig';
 import { CloudSync } from './contexts/CloudSync';
 
 function Workspace({ children }: { children: ReactNode }) {
@@ -26,7 +27,7 @@ function Workspace({ children }: { children: ReactNode }) {
 }
 function Theme() {
   const theme = useTracklyStore((state) => state.preferences.theme);
-  useEffect(() => { document.documentElement.dataset.theme = theme; }, [theme]);
+  useEffect(() => { document.documentElement.dataset.theme = theme as AppTheme; }, [theme]);
   return null;
 }
 function Routes() {
