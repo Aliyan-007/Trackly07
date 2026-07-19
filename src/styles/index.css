@@ -69,79 +69,9 @@ html[data-theme='cyberpunk']{--t-bg:#07070d;--t-surface:#10101d;--t-ink:#e9ffff;
 html[data-theme='superhero'] .card,html[data-theme='cyberpunk'] .card,html[data-theme='galaxy'] .card{box-shadow:0 0 22px color-mix(in srgb,var(--t-primary) 22%,transparent)!important}html[data-theme='anime'] .card{border-radius:22px!important}html[data-theme='nature'] .card{border-radius:22px 8px 22px 8px!important}.realtime-schedule{padding:20px;display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.realtime-schedule h2{font-family:var(--t-display);margin:6px 0;font-size:22px}.schedule-pulse{border:1px solid var(--t-border);border-radius:99px;padding:8px 11px;font-size:12px;font-weight:700}.schedule-pulse.active{background:var(--t-primary);color:var(--t-bg);box-shadow:0 0 17px var(--t-glow)}
 /* Journal-only immersive skins: do not change the rest of Trackly. */
 .journal-full{position:relative;isolation:isolate;margin:-14px;padding:28px;border-radius:20px;min-height:calc(100dvh - 170px);overflow:hidden}.journal-full:before,.journal-full:after{content:'';position:absolute;pointer-events:none;z-index:-1}.journal-full:before{inset:0;background:radial-gradient(circle at 12% 12%,#fff 0 2px,transparent 3px),radial-gradient(circle at 84% 15%,#fff 0 3px,transparent 4px);opacity:.42}.journal-full:after{width:360px;height:360px;border-radius:50%;right:-140px;bottom:-170px;background:#ffffff55;filter:blur(5px)}.journal-full .journal-hero{background:color-mix(in srgb,var(--journal-surface,#fff) 90%,transparent)!important;border-color:var(--journal-border,#ddd)!important;color:var(--journal-ink,#222)!important;backdrop-filter:blur(8px)}.journal-full .journal-editor,.journal-full .journal-list{background:color-mix(in srgb,var(--journal-surface,#fff) 94%,transparent)!important;border-color:var(--journal-border,#ddd)!important;color:var(--journal-ink,#222)!important}.journal-full.midnight{--journal-surface:#15151c;--journal-border:#444452;--journal-ink:#f7f5ee;background:linear-gradient(135deg,#08080d,#202034)}.journal-full.sage{--journal-surface:#f5fff4;--journal-border:#9fc6a0;--journal-ink:#24442c;background:linear-gradient(135deg,#cde7c8,#f5f9e8)}.journal-full.ocean{--journal-surface:#effaff;--journal-border:#94c6dd;--journal-ink:#153d55;background:linear-gradient(135deg,#acdceb,#e8f7ff)}.journal-full.rose{--journal-surface:#fff7f9;--journal-border:#f1b4c7;--journal-ink:#6b3040;background:linear-gradient(135deg,#ffd9e5,#fff5ec)}.journal-full.lavender{--journal-surface:#faf7ff;--journal-border:#c9b9e6;--journal-ink:#503f74;background:linear-gradient(135deg,#ded5f3,#faf5ff)}.journal-full.sand{--journal-surface:#fffaf0;--journal-border:#d8bc8b;--journal-ink:#61482b;background:linear-gradient(135deg,#f1dbad,#fff6df)}.journal-full.superhero{--journal-surface:#102957;--journal-border:#3c87d6;--journal-ink:#f1f8ff;background:linear-gradient(135deg,#061631,#15579b)}.journal-full.superhero:before{background:repeating-linear-gradient(135deg,transparent 0 25px,#4aa9ff33 26px 29px),radial-gradient(circle at 20% 15%,#fff 0 2px,transparent 3px)}.journal-full.fairytalemagic{--journal-surface:#fff8e8;--journal-border:#e6b884;--journal-ink:#693b4a;background:linear-gradient(135deg,#ffe5bc,#ffcdd2)}.journal-full.princess{--journal-surface:#fff7fb;--journal-border:#dca0c4;--journal-ink:#66355a;background:linear-gradient(135deg,#ffe0ef,#d9b8ec)}.journal-full.pirateadventure{--journal-surface:#392617;--journal-border:#b37b42;--journal-ink:#ffefd0;background:repeating-linear-gradient(135deg,#3c2819 0 8px,#5f3a20 8px 16px)}.global-ai{right:16px!important;bottom:18px!important;padding:7px 10px!important;font-size:11px!important;min-height:0!important;box-shadow:0 4px 12px #0003!important}@media(max-width:760px){.journal-full{margin:-8px;padding:16px;min-height:auto}.global-ai{right:12px!important;bottom:72px!important}}
-
-/* Final dark-mode readability override */
-
-html[data-theme='dark'] .notes-layout,
-html[data-theme='dark'] .journal-layout,
-html[data-theme='dark'] .journal-full,
-html[data-theme='dark'] .ai-window {
-  color: #f8f6f0 !important;
-}
-
-/* Notes */
-html[data-theme='dark'] .notes-list,
-html[data-theme='dark'] .note-editor,
-html[data-theme='dark'] .note-item,
-html[data-theme='dark'] .empty-workspace {
-  background: #121212 !important;
-  color: #f8f6f0 !important;
-  border-color: #303030 !important;
-}
-
-html[data-theme='dark'] .note-item.selected {
-  background: #262626 !important;
-}
-
-html[data-theme='dark'] .note-title,
-html[data-theme='dark'] .note-body {
-  color: #f8f6f0 !important;
-  background: transparent !important;
-}
-
-/* Journal */
-html[data-theme='dark'] .journal-full {
-  background: #090909 !important;
-}
-
-html[data-theme='dark'] .journal-hero,
-html[data-theme='dark'] .journal-list,
-html[data-theme='dark'] .journal-editor {
-  background: #151515 !important;
-  color: #f8f6f0 !important;
-  border-color: #353535 !important;
-}
-
-html[data-theme='dark'] .journal-list button {
-  color: #f8f6f0 !important;
-}
-
-html[data-theme='dark'] .journal-list button.selected {
-  background: #262626 !important;
-}
-
-/* AI Companion */
-html[data-theme='dark'] .ai-window,
-html[data-theme='dark'] .ai-window header,
-html[data-theme='dark'] .ai-window form,
-html[data-theme='dark'] .ai-changes {
-  background: #101010 !important;
-  color: #f8f6f0 !important;
-  border-color: #303030 !important;
-}
-
-html[data-theme='dark'] .ai-message.assistant {
-  background: #252525 !important;
-  color: #f8f6f0 !important;
-}
-
-html[data-theme='dark'] .ai-message.user {
-  background: #f8f6f0 !important;
-  color: #111111 !important;
-}
-
-html[data-theme='dark'] .ai-window input {
-  background: #080808 !important;
-  color: #f8f6f0 !important;
-  border-color: #3a3a3a !important;
-}
+/* Dark-mode repairs for Notes, Journal, and the fixed AI workspace. */
+html[data-theme='dark'] .notes-list,html[data-theme='dark'] .note-editor,html[data-theme='dark'] .journal-list,html[data-theme='dark'] .journal-editor{background:#121212!important;color:#f8f6f0!important;border-color:#303030!important}html[data-theme='dark'] .note-item.selected,html[data-theme='dark'] .journal-list button.selected{background:#242424!important}html[data-theme='dark'] .editor-tools{border-color:#303030!important}html[data-theme='dark'] .editor-tools button,html[data-theme='dark'] .editor-tools select{background:#252525!important;color:#f8f6f0!important}html[data-theme='dark'] .note-title,html[data-theme='dark'] .note-body{color:#f8f6f0!important}html[data-theme='dark'] .ai-window{background:#101010!important;border-color:#303030!important}html[data-theme='dark'] .ai-window header,html[data-theme='dark'] .ai-window form,html[data-theme='dark'] .ai-changes{border-color:#303030!important;background:#151515!important;color:#f8f6f0!important}html[data-theme='dark'] .ai-message.assistant{background:#242424!important;color:#f8f6f0!important}html[data-theme='dark'] .ai-changes span{background:#1b1b1b!important;border-color:#3a3a3a!important;color:#f8f6f0!important}html[data-theme='dark'] .journal-full .journal-hero,html[data-theme='dark'] .journal-full .journal-editor,html[data-theme='dark'] .journal-full .journal-list{color:var(--journal-ink,#f8f6f0)!important}
+/* Journal theme wins over global dark mode: readable labels and themed full workspace. */
+.journal-full .theme-picker button{color:#242424!important;background:#fff!important;border-color:#bdbdb8!important}.journal-full .theme-picker button.active{background:#171717!important;color:#fff!important;border-color:#171717!important}
+html[data-theme='dark'] .journal-full.sage{background:linear-gradient(135deg,#b8d8b1,#e8f4db)!important;--journal-surface:#f6fff2;--journal-border:#86b589;--journal-ink:#19371f}html[data-theme='dark'] .journal-full.ocean{background:linear-gradient(135deg,#94cfeb,#e5f7ff)!important;--journal-surface:#effaff;--journal-border:#78b8d6;--journal-ink:#123c55}html[data-theme='dark'] .journal-full.rose{background:linear-gradient(135deg,#ffc8d8,#fff0e5)!important;--journal-surface:#fff8fa;--journal-border:#e9a2ba;--journal-ink:#68283c}html[data-theme='dark'] .journal-full.lavender{background:linear-gradient(135deg,#d6c9f1,#f8f4ff)!important;--journal-surface:#fbf9ff;--journal-border:#b9a5df;--journal-ink:#49346d}html[data-theme='dark'] .journal-full.sand{background:linear-gradient(135deg,#ead1a4,#fff6df)!important;--journal-surface:#fffaf0;--journal-border:#cfad73;--journal-ink:#5f4323}html[data-theme='dark'] .journal-full.superhero{background:linear-gradient(135deg,#061632,#1e63a5)!important;--journal-surface:#0f2b59;--journal-border:#4c96df;--journal-ink:#f4f9ff}html[data-theme='dark'] .journal-full.fairytalemagic{background:linear-gradient(135deg,#ffe0ad,#f7b8c4)!important;--journal-surface:#fff8e6;--journal-border:#e6ad78;--journal-ink:#653646}html[data-theme='dark'] .journal-full.princess{background:linear-gradient(135deg,#ffdcec,#d2b4e9)!important;--journal-surface:#fff8fc;--journal-border:#d899bf;--journal-ink:#613455}html[data-theme='dark'] .journal-full.pirateadventure{background:repeating-linear-gradient(135deg,#382517 0 8px,#5c3920 8px 16px)!important;--journal-surface:#432c1a;--journal-border:#b4773d;--journal-ink:#fff0d2}
+html[data-theme='dark'] .journal-full .journal-hero,html[data-theme='dark'] .journal-full .journal-list,html[data-theme='dark'] .journal-full .journal-editor{background:color-mix(in srgb,var(--journal-surface) 92%,transparent)!important;border-color:var(--journal-border)!important;color:var(--journal-ink)!important}html[data-theme='dark'] .journal-full h2,html[data-theme='dark'] .journal-full b,html[data-theme='dark'] .journal-full .note-title,html[data-theme='dark'] .journal-full .note-body,html[data-theme='dark'] .journal-full .journal-list button{color:var(--journal-ink)!important}html[data-theme='dark'] .journal-full .theme-picker button{color:#202020!important;background:#fff!important}html[data-theme='dark'] .journal-full .theme-picker button.active{color:#fff!important;background:#171717!important}
