@@ -6,7 +6,7 @@ export const handler=async(event)=>{
     const url=process.env.AI_API_URL?.trim(),key=process.env.AI_API_KEY?.trim(),model=process.env.AI_MODEL?.trim()||'llama-3.3-70b-versatile';
     if(!url||!key)return json(503,{error:'AI is not configured. Add AI_API_URL, AI_API_KEY, and AI_MODEL in Netlify environment variables, then redeploy.'});
     const {messages=[],context={},mode='general'}=JSON.parse(event.body||'{}');
-    const instruction=mode==='timetable'
+    const instruction=mode==='workspace' ? 'Reply ONLY with JSON: {"message":string,"changes":[{"type":"complete_task"|"toggle_habit"|"add_schedule","id":string,"title":string,"day":0-6,"start":"HH:MM","end":"HH:MM"}]}. Only propose changes supported by supplied ids. Never apply anything yourself.' : mode==='timetable'
       ? 'Reply ONLY with valid JSON in this exact format: {"message":"short explanation","changes":[{"title":"string","day":0,"start":"HH:MM","end":"HH:MM","kind":"study","color":"#54a580"}]}. day is 0 Sunday through 6 Saturday. Include only new sessions to add; never invent fixed classes.'
       : 'Reply in concise, plain text.';
     const system={role:'system',content:`You are Trackly’s calm academic planning assistant. Help students plan realistically, break down work, and protect rest. ${instruction} Current workspace context: ${JSON.stringify(context)}. Do not claim to have performed actions outside this conversation.`};
