@@ -100,3 +100,31 @@ html[data-theme='dark'] .journal-full .journal-hero,html[data-theme='dark'] .jou
   .notes-list::-webkit-scrollbar,.journal-list::-webkit-scrollbar,.ai-scroll::-webkit-scrollbar,.ai-result::-webkit-scrollbar{width:5px}
   .calendar-actions::-webkit-scrollbar-thumb,.calendar-views::-webkit-scrollbar-thumb,.theme-picker::-webkit-scrollbar-thumb,.mobile-nav::-webkit-scrollbar-thumb,.timetable-card::-webkit-scrollbar-thumb,.month-view::-webkit-scrollbar-thumb,.notes-list::-webkit-scrollbar-thumb,.journal-list::-webkit-scrollbar-thumb,.ai-scroll::-webkit-scrollbar-thumb,.ai-result::-webkit-scrollbar-thumb{background:var(--t-primary,#777);border-radius:99px}
 }
+/* One continuous document scroll on phones: swipe anywhere to move up/down. */
+@media(max-width:760px){
+  html{
+    height:auto!important;
+    min-height:100%!important;
+    overflow-y:scroll!important;
+    overflow-x:hidden!important;
+  }
+
+  body,
+  #root,
+  .app-shell,
+  .app-shell main{
+    height:auto!important;
+    min-height:100dvh!important;
+    max-height:none!important;
+    overflow:visible!important;
+  }
+
+  body{
+    padding-bottom:calc(88px + env(safe-area-inset-bottom));
+  }
+
+  .page-content{
+    min-height:100dvh;
+    overflow:visible!important;
+  }
+}
