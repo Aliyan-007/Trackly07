@@ -11,6 +11,7 @@ import { Settings } from './pages/Settings';
 import { Assistant } from './pages/Assistant';
 import { Notes } from './pages/Notes';
 import { Journal } from './pages/Journal';
+import { StudyFiles } from './pages/StudyFiles';
 import { AuthPage } from './pages/Auth';
 import { ResetPassword } from './pages/ResetPassword';
 import { AppLayout } from './layouts/AppLayout';
@@ -44,6 +45,7 @@ function Routes() {
     <Route path="/assistant">{() => <Workspace><Assistant /></Workspace>}</Route>
     <Route path="/notes">{() => <Workspace><Notes /></Workspace>}</Route>
     <Route path="/journal">{() => <Workspace><Journal /></Workspace>}</Route>
+    <Route path="/study-files">{() => <Workspace><StudyFiles /></Workspace>}</Route>
     <Route path="/settings">{() => <Workspace><Settings /></Workspace>}</Route>
     <Route>{() => <Landing />}</Route>
   </Switch></>;
