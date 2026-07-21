@@ -1,0 +1,10 @@
+node_modules
+dist
+.env.local
+.env
+*.tsbuildinfo
+
+# Temporary or backup Netlify function files
+netlify/functions/*.bak
+netlify/functions/*.new
+netlify/functions/*.js
