@@ -22,7 +22,7 @@ import { CloudSync } from './contexts/CloudSync';
 
 function Workspace({ children }: { children: ReactNode }) {
   const { user, loading, configured } = useAuth();
-  if (loading) return <div className="app-loading" aria-label="Loading your Trackly workspace"><div className="loading-sidebar"/><main className="loading-main"><span className="loading-line loading-short"/><span className="loading-line loading-title"/><div className="loading-grid"><i/><i/><i/></div></main></div>;
+  if (loading) return null;
   if (configured && !user) return <Redirect to="/sign-in" />;
   return <AppLayout>{children}</AppLayout>;
 }
