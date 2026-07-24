@@ -1,0 +1,2 @@
+import{Modal}from'./Modal';import{Trash2}from'../shared/Icons';
+export function ConfirmDialog({title,description,onCancel,onConfirm}:{title:string;description:string;onCancel:()=>void;onConfirm:()=>void}){return <Modal title="" onClose={onCancel}><div className="confirm-dialog"><span className="confirm-icon"><Trash2 size={21}/></span><h2 className="serif">{title}</h2><p>{description}</p><div><button className="btn btn-soft" onClick={onCancel}>Keep it</button><button className="btn confirm-delete" onClick={onConfirm}>Delete forever</button></div></div></Modal>}
