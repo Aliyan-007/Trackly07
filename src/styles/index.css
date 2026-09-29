@@ -1121,7 +1121,7 @@ html[data-theme='nature'] .card {
   text-align: left;
   font-family: inherit;
   color: inherit;
-  cursor: pointer;
+  cursor: grab;
   position: absolute;
   margin-left: 4px;
   border-left: 3px solid;
@@ -1129,9 +1129,17 @@ html[data-theme='nature'] .card {
   padding: 7px 8px;
   font-size: 11px;
   overflow: hidden;
+  touch-action: none;
+  user-select: none;
   transition:
     transform 0.2s,
     filter 0.2s;
+}
+
+.timetable-event.dragging {
+  cursor: grabbing;
+  z-index: 5;
+  transition: filter 0.2s;
 }
 
 .timetable-event b,

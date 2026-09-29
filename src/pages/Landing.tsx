@@ -30,7 +30,8 @@ export function Landing() {
   return (
     <div
       style={{
-        background: '#fafaf8',
+        background: 'var(--t-bg)',
+        color: 'var(--t-ink)',
         minHeight: '100vh',
       }}
     >
@@ -51,7 +52,7 @@ export function Landing() {
             gap: 9,
             alignItems: 'center',
             fontWeight: 700,
-            color: '#1c1c1a',
+            color: 'var(--t-ink)',
           }}
         >
           <img src={logo} className="brand-logo" alt="Trackly logo" />
@@ -64,7 +65,7 @@ export function Landing() {
             display: 'flex',
             gap: 26,
             fontSize: 14,
-            color: '#64645f',
+            color: 'var(--t-muted)',
           }}
         >
           <a
@@ -125,8 +126,8 @@ export function Landing() {
           className="pill"
           style={{
             display: 'inline-block',
-            background: '#efeee9',
-            color: '#62625d',
+            background: 'color-mix(in srgb, var(--t-primary) 8%, var(--t-surface))',
+            color: 'var(--t-ink)',
             marginBottom: 20,
           }}
         >
@@ -141,7 +142,7 @@ export function Landing() {
             letterSpacing: '-2.4px',
             margin: '0 auto 22px',
             maxWidth: 820,
-            color: '#1c1c1a',
+            color: 'var(--t-ink)',
           }}
         >
           A quieter way to keep up.
@@ -151,7 +152,7 @@ export function Landing() {
           style={{
             fontSize: 18,
             lineHeight: 1.6,
-            color: '#6e6e69',
+            color: 'var(--t-muted)',
             maxWidth: 580,
             margin: 'auto',
           }}
@@ -199,15 +200,15 @@ export function Landing() {
           className="card"
           style={{
             padding: 22,
-            background: '#f1f1ed',
+            background: 'color-mix(in srgb, var(--t-primary) 5%, var(--t-surface))',
           }}
         >
           <div
             className="grid-collapse"
             style={{
-              background: '#fff',
+              background: 'var(--t-surface)',
               borderRadius: 11,
-              border: '1px solid #e3e2de',
+              border: '1px solid var(--t-border)',
               padding: 22,
               display: 'grid',
               gridTemplateColumns: '1.1fr .9fr',
@@ -246,7 +247,7 @@ export function Landing() {
                 <div
                   key={x}
                   style={{
-                    borderTop: '1px solid #eee',
+                    borderTop: '1px solid var(--t-border)',
                     padding: '12px 0',
                     fontSize: 14,
                   }}
@@ -269,7 +270,7 @@ export function Landing() {
 
             <div
               style={{
-                background: '#fafaf8',
+                background: 'color-mix(in srgb, var(--t-bg) 60%, var(--t-surface))',
                 borderRadius: 10,
                 padding: 17,
               }}
@@ -280,16 +281,16 @@ export function Landing() {
                 style={{
                   marginTop: 16,
                   padding: 13,
-                  background: '#fff',
-                  border: '1px solid #e7e7e3',
+                  background: 'var(--t-surface)',
+                  border: '1px solid var(--t-border)',
                   borderRadius: 10,
                 }}
               >
                 <span
                   className="pill"
                   style={{
-                    background: '#fcedea',
-                    color: '#b75c48',
+                    background: 'color-mix(in srgb, var(--t-accent) 14%, var(--t-surface))',
+                    color: 'var(--t-ink)',
                   }}
                 >
                   High priority
@@ -299,7 +300,7 @@ export function Landing() {
                   style={{
                     fontWeight: 600,
                     marginTop: 8,
-                    color: '#1c1c1a',
+                    color: 'var(--t-ink)',
                   }}
                 >
                   Finish cognitive science reading
@@ -320,14 +321,14 @@ export function Landing() {
                 style={{
                   marginTop: 18,
                   fontSize: 13,
-                  color: '#676762',
+                  color: 'var(--t-muted)',
                 }}
               >
                 Today’s habits
                 <b
                   style={{
                     float: 'right',
-                    color: '#333',
+                    color: 'var(--t-ink)',
                   }}
                 >
                   2 / 3
@@ -338,7 +339,7 @@ export function Landing() {
                 style={{
                   height: 6,
                   borderRadius: 9,
-                  background: '#e4e4df',
+                  background: 'var(--t-border)',
                   marginTop: 8,
                 }}
               >
@@ -389,7 +390,7 @@ export function Landing() {
               fontSize: 38,
               letterSpacing: '-1px',
               margin: '10px 0',
-              color: '#1c1c1a',
+              color: 'var(--t-ink)',
             }}
           >
             Everything you need. Nothing shouting for attention.
@@ -457,7 +458,7 @@ export function Landing() {
       <section
         id="faq"
         style={{
-          borderTop: '1px solid #e8e8e3',
+          borderTop: '1px solid var(--t-border)',
           padding: '64px 24px',
           textAlign: 'center',
         }}
@@ -467,7 +468,7 @@ export function Landing() {
           style={{
             fontSize: 33,
             margin: 0,
-            color: '#1c1c1a',
+            color: 'var(--t-ink)',
           }}
         >
           Start with a clearer week.
@@ -486,11 +487,11 @@ export function Landing() {
           maxWidth: 1160,
           margin: 'auto',
           padding: '22px 26px',
-          borderTop: '1px solid #e8e8e3',
+          borderTop: '1px solid var(--t-border)',
           display: 'flex',
           justifyContent: 'space-between',
           fontSize: 13,
-          color: '#777',
+          color: 'var(--t-muted)',
         }}
       >
         <span>© 2026 Trackly</span>

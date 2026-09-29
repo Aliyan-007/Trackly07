@@ -1,9 +1,10 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { Page } from '../layouts/AppLayout';
 import { useTracklyStore } from '../stores/useTracklyStore';
 import { Modal } from '../components/ui/Modal';
 import { Plus, ChevronLeft, ChevronRight } from '../components/shared/Icons';
 import { AISchedule } from '../components/timetable/AISchedule';
+import type { ScheduleItem } from '../types';
 import { localDate } from '../utils/date';
 const names = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 type View = 'day' | 'week' | 'month' | 'agenda';
@@ -98,6 +99,7 @@ export function Timetable() {
           schedule={schedule}
           tasks={tasks}
           onEdit={setSelected}
+          onMove={(id, changes) => updateSchedule(id, changes)}
         />
       )}{' '}
       {view === 'day' && (
@@ -239,12 +241,14 @@ function WeekGrid({
   schedule,
   tasks,
   onEdit,
+  onMove,
 }: {
   dates: Date[];
   today: string;
   schedule: any[];
   tasks: any[];
   onEdit: (item: any) => void;
+  onMove: (id: string, changes: Partial<ScheduleItem>) => void;
 }) {
   const now = new Date(),
     current = now.getHours() * 60 + now.getMinutes();
@@ -277,7 +281,15 @@ function WeekGrid({
               mins(item.start) <= current &&
               mins(item.end) > current;
             return (
-              <EventBlock key={item.id} item={item} col={col} active={isNow} onEdit={onEdit} />
+              <EventBlock
+                key={item.id}
+                item={item}
+                col={col}
+                dates={dates}
+                active={isNow}
+                onEdit={onEdit}
+                onMove={onMove}
+              />
             );
           })}
           {tasks
@@ -304,21 +316,100 @@ function WeekGrid({
 function EventBlock({
   item,
   col,
+  dates,
   active,
   onEdit,
+  onMove,
 }: {
   item: any;
   col: number;
+  dates: Date[];
   active: boolean;
   onEdit: (item: any) => void;
+  onMove: (id: string, changes: Partial<ScheduleItem>) => void;
 }) {
   const top = (mins(item.start) - 480) * 1.1,
     height = (mins(item.end) - mins(item.start)) * 1.1;
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const drag = useRef<{
+    pointerId: number;
+    startX: number;
+    startY: number;
+    grabOffsetY: number;
+    body: HTMLElement;
+    moved: boolean;
+  } | null>(null);
+  const ignoreClick = useRef(false);
+  const beginDrag = (event: React.PointerEvent<HTMLButtonElement>) => {
+    if (event.button !== 0) return;
+    const body = event.currentTarget.closest('.timetable-body');
+    if (!(body instanceof HTMLElement)) return;
+    const bounds = event.currentTarget.getBoundingClientRect();
+    event.currentTarget.setPointerCapture(event.pointerId);
+    drag.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      grabOffsetY: event.clientY - bounds.top,
+      body,
+      moved: false,
+    };
+  };
+  const moveDrag = (event: React.PointerEvent<HTMLButtonElement>) => {
+    const current = drag.current;
+    if (!current || current.pointerId !== event.pointerId) return;
+    const deltaX = event.clientX - current.startX;
+    const deltaY = event.clientY - current.startY;
+    if (Math.abs(deltaX) > 4 || Math.abs(deltaY) > 4) current.moved = true;
+    if (current.moved) setOffset({ x: deltaX, y: deltaY });
+  };
+  const finishDrag = (event: React.PointerEvent<HTMLButtonElement>) => {
+    const current = drag.current;
+    if (!current || current.pointerId !== event.pointerId) return;
+    drag.current = null;
+    setOffset({ x: 0, y: 0 });
+    if (!current.moved) return;
+
+    ignoreClick.current = true;
+    window.setTimeout(() => {
+      ignoreClick.current = false;
+    }, 0);
+
+    const bounds = current.body.getBoundingClientRect();
+    const columnWidth = (bounds.width - 56) / 7;
+    const nextColumn = Math.max(
+      0,
+      Math.min(6, Math.floor((event.clientX - bounds.left - 56) / columnWidth)),
+    );
+    const duration = mins(item.end) - mins(item.start);
+    const dropTop = event.clientY - bounds.top - current.grabOffsetY;
+    const snappedStart = 480 + Math.round(dropTop / 33) * 30;
+    const nextStart = Math.max(480, Math.min(960 - duration, snappedStart));
+    const nextDate = dates[nextColumn];
+    const toTime = (minutes: number) =>
+      `${String(Math.floor(minutes / 60)).padStart(2, '0')}:${String(minutes % 60).padStart(2, '0')}`;
+
+    onMove(item.id, {
+      day: nextDate.getDay(),
+      start: toTime(nextStart),
+      end: toTime(nextStart + duration),
+      ...(item.date ? { date: localDate(nextDate) } : {}),
+    });
+  };
   return (
     <button
       type="button"
-      onClick={() => onEdit(item)}
-      className={'timetable-event ' + (active ? 'active' : '')}
+      onPointerDown={beginDrag}
+      onPointerMove={moveDrag}
+      onPointerUp={finishDrag}
+      onPointerCancel={() => {
+        drag.current = null;
+        setOffset({ x: 0, y: 0 });
+      }}
+      onClick={() => {
+        if (!ignoreClick.current) onEdit(item);
+      }}
+      className={'timetable-event ' + (active ? 'active ' : '') + (drag.current ? 'dragging' : '')}
       style={{
         left: `calc(56px + (100% - 56px)/7 * ${col})`,
         top,
@@ -326,6 +417,8 @@ function EventBlock({
         height: Math.max(height, 34),
         borderColor: item.color,
         background: item.color + '26',
+        transform:
+          offset.x || offset.y ? `translate(${offset.x}px, ${offset.y}px) scale(1.03)` : undefined,
       }}
     >
       <b>{item.title}</b>
