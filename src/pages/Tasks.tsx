@@ -13,10 +13,10 @@ import {
 } from '../components/shared/Icons';
 import type { Priority, Task } from '../types';
 
-const priorityColor = {
-  high: '#df7c62',
-  medium: '#c59d5f',
-  low: '#6b8fc9',
+const priorityClass = {
+  high: 'task-priority-high',
+  medium: 'task-priority-medium',
+  low: 'task-priority-low',
 };
 
 function TaskForm({ onClose }: { onClose: () => void }) {
@@ -56,6 +56,7 @@ function TaskForm({ onClose }: { onClose: () => void }) {
           autoFocus
           className="input"
           required
+          aria-label="Task title"
           placeholder="What needs doing?"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -63,27 +64,26 @@ function TaskForm({ onClose }: { onClose: () => void }) {
 
         <input
           className="input"
+          aria-label="Subject or category"
           placeholder="Subject or category"
           value={subject}
           onChange={(e) => setSubject(e.target.value)}
         />
 
         <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: 10,
-          }}
+          className="task-date-priority"
         >
           <input
             className="input"
             type="date"
+            aria-label="Due date"
             value={due}
             onChange={(e) => setDue(e.target.value)}
           />
 
           <select
             className="input"
+            aria-label="Priority"
             value={priority}
             onChange={(e) =>
               setPriority(e.target.value as Priority)
@@ -210,16 +210,11 @@ export function Tasks() {
           return (
             <section
               key={status}
+              className="task-group"
               style={{ marginTop: 18 }}
             >
               <h2
-                style={{
-                  fontSize: 12,
-                  textTransform: 'uppercase',
-                  letterSpacing: '.08em',
-                  color: '#858580',
-                  margin: '0 8px 8px',
-                }}
+                  className="task-group-heading"
               >
                 {status === 'doing'
                   ? 'In progress'
@@ -234,13 +229,8 @@ export function Tasks() {
               {rows.map((task) => (
                 <div
                   key={task.id}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 12,
-                    padding: '13px 8px',
-                    borderTop: '1px solid #eee',
-                  }}
+                  className="task-row"
+                  data-status={task.status}
                 >
                   {/* Complete Button */}
                   <button
@@ -249,6 +239,7 @@ export function Tasks() {
                       task.title +
                       ' complete'
                     }
+                    className={'task-toggle' + (task.status === 'done' ? ' completed' : '')}
                     onClick={() =>
                       updateTask(task.id, {
                         status:
@@ -257,18 +248,6 @@ export function Tasks() {
                             : 'done',
                       })
                     }
-                    style={{
-                      height: 20,
-                      width: 20,
-                      borderRadius: 6,
-                      border:
-                        '1.5px solid #bdbdb8',
-                      background:
-                        task.status === 'done'
-                          ? '#292a29'
-                          : 'white',
-                      color: 'white',
-                    }}
                   >
                     {task.status === 'done'
                       ? '✓'
@@ -276,57 +255,29 @@ export function Tasks() {
                   </button>
 
                   {/* Task Information */}
-                  <div
-                    style={{
-                      flex: 1,
-                      cursor: 'pointer',
-                    }}
+                  <button
+                    type="button"
+                    className="task-info"
+                    aria-label={'Edit task: ' + task.title}
                     onClick={() =>
                       setSelected(task)
                     }
                   >
                     <div
-                      style={{
-                        fontSize: 14,
-                        fontWeight: 600,
-                        textDecoration:
-                          task.status === 'done'
-                            ? 'line-through'
-                            : 'none',
-                        color:
-                          task.status === 'done'
-                            ? '#888'
-                            : '#272727',
-                      }}
+                      className="task-title"
                     >
                       {task.title}
                     </div>
 
-                    <div
-                      className="muted"
-                      style={{
-                        fontSize: 12,
-                        marginTop: 3,
-                      }}
-                    >
+                    <div className="muted task-meta">
                       {task.subject} · due{' '}
                       {task.due}
                     </div>
-                  </div>
+                  </button>
 
                   {/* Priority */}
                   <span
-                    className="pill"
-                    style={{
-                      background:
-                        priorityColor[
-                          task.priority
-                        ] + '22',
-                      color:
-                        priorityColor[
-                          task.priority
-                        ],
-                    }}
+                    className={'pill task-priority ' + priorityClass[task.priority]}
                   >
                     {task.priority}
                   </span>
@@ -337,15 +288,9 @@ export function Tasks() {
                       setSelected(task)
                     }
                     aria-label="Open task"
-                    style={{
-                      border: 0,
-                      background: 'none',
-                    }}
+                    className="task-open"
                   >
-                    <PanelRight
-                      size={17}
-                      color="#888"
-                    />
+                    <PanelRight size={17} />
                   </button>
                 </div>
               ))}
@@ -395,6 +340,7 @@ export function Tasks() {
               {/* Title */}
               <input
                 className="input"
+                aria-label="Task title"
                 value={selected.title}
                 onChange={(e) => {
                   updateTask(selected.id, {
@@ -411,6 +357,7 @@ export function Tasks() {
               {/* Subject */}
               <input
                 className="input"
+                aria-label="Subject or category"
                 value={selected.subject}
                 onChange={(e) => {
                   updateTask(selected.id, {
@@ -428,6 +375,7 @@ export function Tasks() {
               <input
                 className="input"
                 type="date"
+                aria-label="Due date"
                 value={selected.due}
                 onChange={(e) => {
                   updateTask(selected.id, {
@@ -473,11 +421,7 @@ export function Tasks() {
               </button>
 
               <button
-                className="btn"
-                style={{
-                  color: '#b45242',
-                  background: '#f9eeee',
-                }}
+                className="btn btn-danger"
                 onClick={() =>
                   setConfirmDelete(true)
                 }
