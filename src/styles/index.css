@@ -2627,14 +2627,3 @@ html[data-theme='galaxy'] .card {
     border-radius: 99px;
   }
 }
-.task-title {
-  color: #ffffff;
-}
-
-html[data-theme='dark'] .task-title {
-  color: #f8f6f0 !important;
-}
-
-html[data-theme='dark'] .task-title:hover {
-  color: #ffffff !important;
-}

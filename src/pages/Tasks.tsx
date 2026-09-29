@@ -217,7 +217,7 @@ export function Tasks() {
                   fontSize: 12,
                   textTransform: 'uppercase',
                   letterSpacing: '.08em',
-                  color: '#f7f7f2',
+                  color: '#858580',
                   margin: '0 8px 8px',
                 }}
               >
@@ -287,13 +287,17 @@ export function Tasks() {
                   >
                     <div
                       style={{
-                        fontSize: 111,
+                        fontSize: 14,
                         fontWeight: 600,
                         textDecoration:
                           task.status === 'done'
                             ? 'line-through'
                             : 'none',
-                            }}
+                        color:
+                          task.status === 'done'
+                            ? '#888'
+                            : '#272727',
+                      }}
                     >
                       {task.title}
                     </div>
@@ -340,7 +344,7 @@ export function Tasks() {
                   >
                     <PanelRight
                       size={17}
-                      color="#ffffff"
+                      color="#888"
                     />
                   </button>
                 </div>
