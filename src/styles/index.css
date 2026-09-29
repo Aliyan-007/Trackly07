@@ -13,7 +13,6 @@
   --dark: #090909;
   --dark-card: #111111;
   --dark-line: #292929;
-
   --pearl-white: #f8f6f0;
 
   --t-bg: #fbfbfa;
@@ -34,7 +33,9 @@
 
 html {
   background: var(--t-bg);
-  transition: background 0.35s, color 0.35s;
+  transition:
+    background 0.35s,
+    color 0.35s;
 }
 
 body {
@@ -821,6 +822,7 @@ html[data-theme='superhero'] {
   --t-accent: #ffd429;
   --t-glow: #209cff;
   --t-display: 'Arial Black', Impact, sans-serif;
+
   --t-graphic:
     radial-gradient(
       circle at 15% 15%,
@@ -843,6 +845,7 @@ html[data-theme='anime'] {
   --t-border: #f2c9da;
   --t-primary: #d66b9d;
   --t-accent: #7e71d8;
+
   --t-graphic:
     radial-gradient(
       circle at 15% 10%,
@@ -864,6 +867,7 @@ html[data-theme='galaxy'] {
   --t-border: #6358aa;
   --t-primary: #a179ff;
   --t-accent: #4fdcff;
+
   --t-graphic:
     radial-gradient(
       circle at 10% 20%,
@@ -890,6 +894,7 @@ html[data-theme='nature'] {
   --t-border: #b9d4bf;
   --t-primary: #2b7242;
   --t-accent: #d58c31;
+
   --t-graphic:
     radial-gradient(
       ellipse at 5% 15%,
@@ -912,6 +917,7 @@ html[data-theme='cyberpunk'] {
   --t-primary: #00e8ff;
   --t-accent: #ff2dbd;
   --t-font: monospace;
+
   --t-graphic:
     linear-gradient(
       #00e8ff11 1px,
@@ -922,10 +928,13 @@ html[data-theme='cyberpunk'] {
       #00e8ff11 1px,
       transparent 1px
     );
+
   background-size: 34px 34px;
 }
 
-/* Theme card effects */
+/* =========================================================
+   Theme Card Effects
+   ========================================================= */
 
 html[data-theme='superhero'] .card,
 html[data-theme='cyberpunk'] .card,
@@ -1383,6 +1392,7 @@ html[data-theme='nature'] .card {
   --journal-surface: #15151c;
   --journal-border: #444452;
   --journal-ink: #f7f5ee;
+
   background:
     linear-gradient(
       135deg,
@@ -1395,6 +1405,7 @@ html[data-theme='nature'] .card {
   --journal-surface: #f5fff4;
   --journal-border: #9fc6a0;
   --journal-ink: #24442c;
+
   background:
     linear-gradient(
       135deg,
@@ -1407,6 +1418,7 @@ html[data-theme='nature'] .card {
   --journal-surface: #effaff;
   --journal-border: #94c6dd;
   --journal-ink: #153d55;
+
   background:
     linear-gradient(
       135deg,
@@ -1419,6 +1431,7 @@ html[data-theme='nature'] .card {
   --journal-surface: #fff7f9;
   --journal-border: #f1b4c7;
   --journal-ink: #6b3040;
+
   background:
     linear-gradient(
       135deg,
@@ -1431,6 +1444,7 @@ html[data-theme='nature'] .card {
   --journal-surface: #faf7ff;
   --journal-border: #c9b9e6;
   --journal-ink: #503f74;
+
   background:
     linear-gradient(
       135deg,
@@ -1443,6 +1457,7 @@ html[data-theme='nature'] .card {
   --journal-surface: #fffaf0;
   --journal-border: #d8bc8b;
   --journal-ink: #61482b;
+
   background:
     linear-gradient(
       135deg,
@@ -1455,6 +1470,7 @@ html[data-theme='nature'] .card {
   --journal-surface: #102957;
   --journal-border: #3c87d6;
   --journal-ink: #f1f8ff;
+
   background:
     linear-gradient(
       135deg,
@@ -1467,6 +1483,7 @@ html[data-theme='nature'] .card {
   --journal-surface: #fff8e8;
   --journal-border: #e6b884;
   --journal-ink: #693b4a;
+
   background:
     linear-gradient(
       135deg,
@@ -1479,6 +1496,7 @@ html[data-theme='nature'] .card {
   --journal-surface: #fff7fb;
   --journal-border: #dca0c4;
   --journal-ink: #66355a;
+
   background:
     linear-gradient(
       135deg,
@@ -1491,6 +1509,7 @@ html[data-theme='nature'] .card {
   --journal-surface: #392617;
   --journal-border: #b37b42;
   --journal-ink: #ffefd0;
+
   background:
     repeating-linear-gradient(
       135deg,
@@ -1548,7 +1567,6 @@ html[data-theme='nature'] .card {
   color: var(--t-bg, #fff);
 }
 
-/* These were explicitly hidden in the original CSS. */
 .global-ai,
 .page-ai {
   display: none !important;
@@ -1689,6 +1707,7 @@ html[data-theme='dark'] {
   --paper: #080808;
   --line: #292929;
   --accent: #ff5a1f;
+
   --t-bg: #080808;
   --t-surface: #121212;
   --t-ink: #f8f6f0;
@@ -1861,7 +1880,9 @@ html[data-theme='dark'] .ai-changes span {
   color: #f8f6f0 !important;
 }
 
-/* Dark Journal Theme Overrides */
+/* =========================================================
+   Dark Journal Theme Overrides
+   ========================================================= */
 
 html[data-theme='dark'] .journal-full.sage {
   background:
@@ -1989,6 +2010,7 @@ html[data-theme='dark'] .journal-full .journal-editor {
       var(--journal-surface) 92%,
       transparent
     ) !important;
+
   border-color: var(--journal-border) !important;
   color: var(--journal-ink) !important;
 }
@@ -2048,6 +2070,7 @@ html[data-theme='cyberpunk'] :is(input, select, textarea) {
       var(--t-surface) 85%,
       #000
     ) !important;
+
   color: var(--t-ink) !important;
   border-color: var(--t-border) !important;
 }
@@ -2061,6 +2084,7 @@ html[data-theme='cyberpunk'] .btn-soft {
       var(--t-primary) 18%,
       var(--t-surface)
     ) !important;
+
   color: var(--t-ink) !important;
   border: 1px solid var(--t-border) !important;
 }
@@ -2137,7 +2161,7 @@ html[data-theme='galaxy'] .card {
 }
 
 /* =========================================================
-   Mobile
+   MOBILE
    ========================================================= */
 
 @media (max-width: 760px) {
@@ -2190,6 +2214,7 @@ html[data-theme='galaxy'] .card {
       22px
       14px
       calc(108px + env(safe-area-inset-bottom)) !important;
+
     min-height: 100dvh;
     overflow: visible !important;
   }
@@ -2203,12 +2228,14 @@ html[data-theme='galaxy'] .card {
       20px
       14px
       14px;
+
     background:
       color-mix(
         in srgb,
         var(--t-bg, #fafafa) 94%,
         transparent
       );
+
     backdrop-filter: blur(12px);
     align-items: flex-start;
     gap: 12px;
@@ -2627,3 +2654,165 @@ html[data-theme='galaxy'] .card {
     border-radius: 99px;
   }
 }
+
+/* =========================================================
+   TASK VISIBILITY FIX
+   ========================================================= */
+
+/*
+   These rules are intentionally at the VERY END of the CSS.
+   This allows them to override the theme colors above.
+*/
+
+/* Main task containers */
+.task,
+.task-item,
+.task-card,
+.todo-item,
+.todo-task,
+.task-row {
+  color: var(--t-ink) !important;
+}
+
+/* Task titles */
+.task-title,
+.task-name,
+.task-text,
+.todo-title,
+.todo-text,
+.task h3,
+.task h4,
+.task-item h3,
+.task-item h4,
+.task-card h3,
+.task-card h4,
+.todo-item h3,
+.todo-item h4 {
+  color: var(--t-ink) !important;
+  font-weight: 600;
+}
+
+/* Task secondary information */
+.task p,
+.task span,
+.task-item p,
+.task-item span,
+.task-card p,
+.task-card span,
+.todo-item p,
+.todo-item span,
+.todo-task p,
+.todo-task span {
+  color: var(--t-muted) !important;
+}
+
+/* Task labels */
+.task label,
+.task-item label,
+.task-card label,
+.todo-item label {
+  color: var(--t-ink) !important;
+}
+
+/* Task buttons should inherit the correct theme */
+.task button,
+.task-item button,
+.task-card button,
+.todo-item button {
+  color: inherit;
+}
+
+/* Dark mode task visibility */
+html[data-theme='dark'] .task,
+html[data-theme='dark'] .task-item,
+html[data-theme='dark'] .task-card,
+html[data-theme='dark'] .todo-item,
+html[data-theme='dark'] .todo-task {
+  color: #f8f6f0 !important;
+}
+
+html[data-theme='dark'] .task-title,
+html[data-theme='dark'] .task-name,
+html[data-theme='dark'] .task-text,
+html[data-theme='dark'] .todo-title,
+html[data-theme='dark'] .todo-text {
+  color: #f8f6f0 !important;
+}
+
+html[data-theme='dark'] .task p,
+html[data-theme='dark'] .task span,
+html[data-theme='dark'] .task-item p,
+html[data-theme='dark'] .task-item span,
+html[data-theme='dark'] .task-card p,
+html[data-theme='dark'] .task-card span,
+html[data-theme='dark'] .todo-item p,
+html[data-theme='dark'] .todo-item span {
+  color: #aaa8a0 !important;
+}
+
+/* Galaxy / Cyberpunk / Superhero */
+html[data-theme='galaxy'] .task,
+html[data-theme='cyberpunk'] .task,
+html[data-theme='superhero'] .task,
+html[data-theme='galaxy'] .task-item,
+html[data-theme='cyberpunk'] .task-item,
+html[data-theme='superhero'] .task-item,
+html[data-theme='galaxy'] .task-card,
+html[data-theme='cyberpunk'] .task-card,
+html[data-theme='superhero'] .task-card,
+html[data-theme='galaxy'] .todo-item,
+html[data-theme='cyberpunk'] .todo-item,
+html[data-theme='superhero'] .todo-item {
+  color: var(--t-ink) !important;
+}
+
+html[data-theme='galaxy'] .task-title,
+html[data-theme='cyberpunk'] .task-title,
+html[data-theme='superhero'] .task-title,
+html[data-theme='galaxy'] .task-name,
+html[data-theme='cyberpunk'] .task-name,
+html[data-theme='superhero'] .task-name,
+html[data-theme='galaxy'] .task-text,
+html[data-theme='cyberpunk'] .task-text,
+html[data-theme='superhero'] .task-text {
+  color: var(--t-ink) !important;
+}
+
+/* Completed tasks */
+.task.completed,
+.task-item.completed,
+.task-card.completed,
+.todo-item.completed,
+.todo-task.completed {
+  color: var(--t-muted) !important;
+  opacity: 0.72;
+}
+
+.task.completed .task-title,
+.task.completed .task-name,
+.task-item.completed .task-title,
+.task-item.completed .task-name,
+.task-card.completed .task-title,
+.task-card.completed .task-name,
+.todo-item.completed .todo-title {
+  color: var(--t-muted) !important;
+  text-decoration: line-through;
+}
+
+/* Keep task checkboxes visible */
+.task input[type='checkbox'],
+.task-item input[type='checkbox'],
+.task-card input[type='checkbox'],
+.todo-item input[type='checkbox'],
+.todo-task input[type='checkbox'] {
+  accent-color: var(--t-primary);
+}
+
+/* Ensure task links remain readable */
+.task a,
+.task-item a,
+.task-card a,
+.todo-item a {
+  color: var(--t-ink) !important;
+}
+
