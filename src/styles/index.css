@@ -153,11 +153,7 @@ button {
 .btn:focus-visible,
 .input:focus-visible,
 a:focus-visible {
-  outline: 3px solid color-mix(
-    in srgb,
-    var(--accent) 60%,
-    transparent
-  );
+  outline: 3px solid color-mix(in srgb, var(--accent) 60%, transparent);
   outline-offset: 3px;
 }
 
@@ -285,13 +281,7 @@ a:focus-visible {
   display: grid;
   place-items: center;
   padding: 28px;
-  background:
-    radial-gradient(
-      circle at 50% -20%,
-      #ededeb 0,
-      transparent 42%
-    ),
-    #fbfbfa;
+  background: radial-gradient(circle at 50% -20%, #ededeb 0, transparent 42%), #fbfbfa;
 }
 
 .auth-panel {
@@ -326,9 +316,7 @@ a:focus-visible {
   width: 30px;
   height: 30px;
   object-fit: contain;
-  filter: drop-shadow(
-    0 2px 5px rgba(0, 0, 0, 0.14)
-  );
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.14));
   flex: 0 0 auto;
 }
 
@@ -484,7 +472,10 @@ a:focus-visible {
 }
 
 .note-title {
-  font: 600 28px Fraunces, Georgia, serif;
+  font:
+    600 28px Fraunces,
+    Georgia,
+    serif;
   border: 0;
   outline: 0;
   background: transparent;
@@ -517,7 +508,9 @@ a:focus-visible {
   outline: 0;
   background: transparent;
   color: inherit;
-  font: 15px/1.65 'DM Sans', sans-serif;
+  font:
+    15px/1.65 'DM Sans',
+    sans-serif;
   padding: 18px 0;
 }
 
@@ -595,42 +588,22 @@ a:focus-visible {
 }
 
 .superhero {
-  background:
-    linear-gradient(
-      135deg,
-      #15233e,
-      #1d4475
-    ) !important;
+  background: linear-gradient(135deg, #15233e, #1d4475) !important;
   color: #f7f5ed !important;
 }
 
 .fairytalemagic {
-  background:
-    linear-gradient(
-      135deg,
-      #fff0d7,
-      #ffd5b9
-    ) !important;
+  background: linear-gradient(135deg, #fff0d7, #ffd5b9) !important;
   color: #6d3340 !important;
 }
 
 .princess {
-  background:
-    linear-gradient(
-      135deg,
-      #ffe7f1,
-      #d8b8e9
-    ) !important;
+  background: linear-gradient(135deg, #ffe7f1, #d8b8e9) !important;
   color: #65365a !important;
 }
 
 .pirateadventure {
-  background:
-    linear-gradient(
-      135deg,
-      #33251b,
-      #7a4f2d
-    ) !important;
+  background: linear-gradient(135deg, #33251b, #7a4f2d) !important;
   color: #fff1d7 !important;
 }
 
@@ -714,12 +687,7 @@ a:focus-visible {
   overflow: auto;
   padding: 12px;
   border-radius: 10px;
-  background:
-    color-mix(
-      in srgb,
-      var(--t-primary, #222) 7%,
-      var(--t-surface, #fff)
-    );
+  background: color-mix(in srgb, var(--t-primary, #222) 7%, var(--t-surface, #fff));
   font-size: 13px;
   line-height: 1.55;
   white-space: pre-wrap;
@@ -760,23 +728,13 @@ main,
 }
 
 .desktop-sidebar {
-  background:
-    color-mix(
-      in srgb,
-      var(--t-bg) 92%,
-      var(--t-surface)
-    ) !important;
+  background: color-mix(in srgb, var(--t-bg) 92%, var(--t-surface)) !important;
   border-color: var(--t-border) !important;
 }
 
 .nav-link.active,
 .nav-link:hover {
-  background:
-    color-mix(
-      in srgb,
-      var(--t-primary) 10%,
-      var(--t-surface)
-    ) !important;
+  background: color-mix(in srgb, var(--t-primary) 10%, var(--t-surface)) !important;
   color: var(--t-ink) !important;
 }
 
@@ -980,17 +938,8 @@ html[data-theme='superhero'] {
   --t-display: 'Arial Black', Impact, sans-serif;
 
   --t-graphic:
-    radial-gradient(
-      circle at 15% 15%,
-      #2ca5ff 0 2px,
-      transparent 3px
-    ),
-    linear-gradient(
-      135deg,
-      transparent 48%,
-      #1f6cad55 49% 51%,
-      transparent 52%
-    );
+    radial-gradient(circle at 15% 15%, #2ca5ff 0 2px, transparent 3px),
+    linear-gradient(135deg, transparent 48%, #1f6cad55 49% 51%, transparent 52%);
 }
 
 html[data-theme='anime'] {
@@ -1004,16 +953,8 @@ html[data-theme='anime'] {
   --t-accent: #7e71d8;
 
   --t-graphic:
-    radial-gradient(
-      circle at 15% 10%,
-      #f59bc4 0 2px,
-      transparent 3px
-    ),
-    radial-gradient(
-      circle at 75% 18%,
-      #f7b6cf 0 3px,
-      transparent 4px
-    );
+    radial-gradient(circle at 15% 10%, #f59bc4 0 2px, transparent 3px),
+    radial-gradient(circle at 75% 18%, #f7b6cf 0 3px, transparent 4px);
 }
 
 html[data-theme='galaxy'] {
@@ -1027,21 +968,9 @@ html[data-theme='galaxy'] {
   --t-accent: #4fdcff;
 
   --t-graphic:
-    radial-gradient(
-      circle at 10% 20%,
-      #fff 0 1px,
-      transparent 2px
-    ),
-    radial-gradient(
-      circle at 75% 15%,
-      #bf8cff 0 2px,
-      transparent 3px
-    ),
-    radial-gradient(
-      ellipse at 50% 50%,
-      #37246788,
-      transparent 60%
-    );
+    radial-gradient(circle at 10% 20%, #fff 0 1px, transparent 2px),
+    radial-gradient(circle at 75% 15%, #bf8cff 0 2px, transparent 3px),
+    radial-gradient(ellipse at 50% 50%, #37246788, transparent 60%);
 }
 
 html[data-theme='nature'] {
@@ -1055,16 +984,8 @@ html[data-theme='nature'] {
   --t-accent: #d58c31;
 
   --t-graphic:
-    radial-gradient(
-      ellipse at 5% 15%,
-      #8fcf8c55,
-      transparent 30%
-    ),
-    radial-gradient(
-      ellipse at 94% 84%,
-      #b9e1a655,
-      transparent 30%
-    );
+    radial-gradient(ellipse at 5% 15%, #8fcf8c55, transparent 30%),
+    radial-gradient(ellipse at 94% 84%, #b9e1a655, transparent 30%);
 }
 
 html[data-theme='cyberpunk'] {
@@ -1079,15 +1000,8 @@ html[data-theme='cyberpunk'] {
   --t-font: monospace;
 
   --t-graphic:
-    linear-gradient(
-      #00e8ff11 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      90deg,
-      #00e8ff11 1px,
-      transparent 1px
-    );
+    linear-gradient(#00e8ff11 1px, transparent 1px),
+    linear-gradient(90deg, #00e8ff11 1px, transparent 1px);
 
   background-size: 34px 34px;
 }
@@ -1099,13 +1013,7 @@ html[data-theme='cyberpunk'] {
 html[data-theme='superhero'] .card,
 html[data-theme='cyberpunk'] .card,
 html[data-theme='galaxy'] .card {
-  box-shadow:
-    0 0 22px
-    color-mix(
-      in srgb,
-      var(--t-primary) 22%,
-      transparent
-    ) !important;
+  box-shadow: 0 0 22px color-mix(in srgb, var(--t-primary) 22%, transparent) !important;
 }
 
 html[data-theme='anime'] .card {
@@ -1193,17 +1101,12 @@ html[data-theme='nature'] .card {
 .timetable-body {
   height: 530px;
   position: relative;
-  background-image:
-    repeating-linear-gradient(
-      to bottom,
-      transparent 0,
-      transparent 65px,
-      color-mix(
-        in srgb,
-        var(--t-border, #eee) 70%,
-        transparent
-      ) 66px
-    );
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 65px,
+    color-mix(in srgb, var(--t-border, #eee) 70%, transparent) 66px
+  );
 }
 
 .hour {
@@ -1259,12 +1162,7 @@ html[data-theme='nature'] .card {
 .timetable-event.active {
   box-shadow:
     0 0 0 1px currentColor,
-    0 0 18px
-      color-mix(
-        in srgb,
-        currentColor 45%,
-        transparent
-      );
+    0 0 18px color-mix(in srgb, currentColor 45%, transparent);
   transform: scale(1.015);
   z-index: 2;
 }
@@ -1341,12 +1239,7 @@ html[data-theme='nature'] .card {
   border-left: 3px solid;
   padding: 7px 10px;
   margin-bottom: 5px;
-  background:
-    color-mix(
-      in srgb,
-      var(--t-primary, #222) 7%,
-      var(--t-surface, #fff)
-    );
+  background: color-mix(in srgb, var(--t-primary, #222) 7%, var(--t-surface, #fff));
   border-radius: 6px;
 }
 
@@ -1465,13 +1358,7 @@ html[data-theme='nature'] .card {
 }
 
 .habit-day:not(:disabled) {
-  outline:
-    2px solid
-    color-mix(
-      in srgb,
-      var(--t-primary, #222) 35%,
-      transparent
-    );
+  outline: 2px solid color-mix(in srgb, var(--t-primary, #222) 35%, transparent);
   outline-offset: 1px;
   cursor: pointer;
 }
@@ -1501,16 +1388,8 @@ html[data-theme='nature'] .card {
 .journal-full::before {
   inset: 0;
   background:
-    radial-gradient(
-      circle at 12% 12%,
-      #fff 0 2px,
-      transparent 3px
-    ),
-    radial-gradient(
-      circle at 84% 15%,
-      #fff 0 3px,
-      transparent 4px
-    );
+    radial-gradient(circle at 12% 12%, #fff 0 2px, transparent 3px),
+    radial-gradient(circle at 84% 15%, #fff 0 3px, transparent 4px);
   opacity: 0.42;
 }
 
@@ -1525,12 +1404,7 @@ html[data-theme='nature'] .card {
 }
 
 .journal-full .journal-hero {
-  background:
-    color-mix(
-      in srgb,
-      var(--journal-surface, #fff) 90%,
-      transparent
-    ) !important;
+  background: color-mix(in srgb, var(--journal-surface, #fff) 90%, transparent) !important;
   border-color: var(--journal-border, #ddd) !important;
   color: var(--journal-ink, #222) !important;
   backdrop-filter: blur(8px);
@@ -1538,12 +1412,7 @@ html[data-theme='nature'] .card {
 
 .journal-full .journal-editor,
 .journal-full .journal-list {
-  background:
-    color-mix(
-      in srgb,
-      var(--journal-surface, #fff) 94%,
-      transparent
-    ) !important;
+  background: color-mix(in srgb, var(--journal-surface, #fff) 94%, transparent) !important;
   border-color: var(--journal-border, #ddd) !important;
   color: var(--journal-ink, #222) !important;
 }
@@ -1553,12 +1422,7 @@ html[data-theme='nature'] .card {
   --journal-border: #444452;
   --journal-ink: #f7f5ee;
 
-  background:
-    linear-gradient(
-      135deg,
-      #08080d,
-      #202034
-    );
+  background: linear-gradient(135deg, #08080d, #202034);
 }
 
 .journal-full.sage {
@@ -1566,12 +1430,7 @@ html[data-theme='nature'] .card {
   --journal-border: #9fc6a0;
   --journal-ink: #24442c;
 
-  background:
-    linear-gradient(
-      135deg,
-      #cde7c8,
-      #f5f9e8
-    );
+  background: linear-gradient(135deg, #cde7c8, #f5f9e8);
 }
 
 .journal-full.ocean {
@@ -1579,12 +1438,7 @@ html[data-theme='nature'] .card {
   --journal-border: #94c6dd;
   --journal-ink: #153d55;
 
-  background:
-    linear-gradient(
-      135deg,
-      #acdceb,
-      #e8f7ff
-    );
+  background: linear-gradient(135deg, #acdceb, #e8f7ff);
 }
 
 .journal-full.rose {
@@ -1592,12 +1446,7 @@ html[data-theme='nature'] .card {
   --journal-border: #f1b4c7;
   --journal-ink: #6b3040;
 
-  background:
-    linear-gradient(
-      135deg,
-      #ffd9e5,
-      #fff5ec
-    );
+  background: linear-gradient(135deg, #ffd9e5, #fff5ec);
 }
 
 .journal-full.lavender {
@@ -1605,12 +1454,7 @@ html[data-theme='nature'] .card {
   --journal-border: #c9b9e6;
   --journal-ink: #503f74;
 
-  background:
-    linear-gradient(
-      135deg,
-      #ded5f3,
-      #faf5ff
-    );
+  background: linear-gradient(135deg, #ded5f3, #faf5ff);
 }
 
 .journal-full.sand {
@@ -1618,12 +1462,7 @@ html[data-theme='nature'] .card {
   --journal-border: #d8bc8b;
   --journal-ink: #61482b;
 
-  background:
-    linear-gradient(
-      135deg,
-      #f1dbad,
-      #fff6df
-    );
+  background: linear-gradient(135deg, #f1dbad, #fff6df);
 }
 
 .journal-full.superhero {
@@ -1631,12 +1470,7 @@ html[data-theme='nature'] .card {
   --journal-border: #3c87d6;
   --journal-ink: #f1f8ff;
 
-  background:
-    linear-gradient(
-      135deg,
-      #061631,
-      #15579b
-    );
+  background: linear-gradient(135deg, #061631, #15579b);
 }
 
 .journal-full.fairytalemagic {
@@ -1644,12 +1478,7 @@ html[data-theme='nature'] .card {
   --journal-border: #e6b884;
   --journal-ink: #693b4a;
 
-  background:
-    linear-gradient(
-      135deg,
-      #ffe5bc,
-      #ffcdd2
-    );
+  background: linear-gradient(135deg, #ffe5bc, #ffcdd2);
 }
 
 .journal-full.princess {
@@ -1657,12 +1486,7 @@ html[data-theme='nature'] .card {
   --journal-border: #dca0c4;
   --journal-ink: #66355a;
 
-  background:
-    linear-gradient(
-      135deg,
-      #ffe0ef,
-      #d9b8ec
-    );
+  background: linear-gradient(135deg, #ffe0ef, #d9b8ec);
 }
 
 .journal-full.pirateadventure {
@@ -1670,12 +1494,7 @@ html[data-theme='nature'] .card {
   --journal-border: #b37b42;
   --journal-ink: #ffefd0;
 
-  background:
-    repeating-linear-gradient(
-      135deg,
-      #3c2819 0 8px,
-      #5f3a20 8px 16px
-    );
+  background: repeating-linear-gradient(135deg, #3c2819 0 8px, #5f3a20 8px 16px);
 }
 
 /* =========================================================
@@ -1770,12 +1589,7 @@ html[data-theme='nature'] .card {
   margin-top: 14px;
   padding: 12px;
   border-radius: 10px;
-  background:
-    color-mix(
-      in srgb,
-      var(--t-primary, #222) 7%,
-      var(--t-surface, #fff)
-    );
+  background: color-mix(in srgb, var(--t-primary, #222) 7%, var(--t-surface, #fff));
 }
 
 .file-selected span {
@@ -1899,8 +1713,7 @@ html[data-theme='dark'] .card {
   background: var(--t-surface) !important;
   border-color: var(--t-border) !important;
   color: var(--t-ink) !important;
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.035) inset !important;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.035) inset !important;
 }
 
 html[data-theme='dark'] h1,
@@ -2047,12 +1860,7 @@ html[data-theme='dark'] .ai-changes span {
    ========================================================= */
 
 html[data-theme='dark'] .journal-full.sage {
-  background:
-    linear-gradient(
-      135deg,
-      #b8d8b1,
-      #e8f4db
-    ) !important;
+  background: linear-gradient(135deg, #b8d8b1, #e8f4db) !important;
 
   --journal-surface: #f6fff2;
   --journal-border: #86b589;
@@ -2060,12 +1868,7 @@ html[data-theme='dark'] .journal-full.sage {
 }
 
 html[data-theme='dark'] .journal-full.ocean {
-  background:
-    linear-gradient(
-      135deg,
-      #94cfeb,
-      #e5f7ff
-    ) !important;
+  background: linear-gradient(135deg, #94cfeb, #e5f7ff) !important;
 
   --journal-surface: #effaff;
   --journal-border: #78b8d6;
@@ -2073,12 +1876,7 @@ html[data-theme='dark'] .journal-full.ocean {
 }
 
 html[data-theme='dark'] .journal-full.rose {
-  background:
-    linear-gradient(
-      135deg,
-      #ffc8d8,
-      #fff0e5
-    ) !important;
+  background: linear-gradient(135deg, #ffc8d8, #fff0e5) !important;
 
   --journal-surface: #fff8fa;
   --journal-border: #e9a2ba;
@@ -2086,12 +1884,7 @@ html[data-theme='dark'] .journal-full.rose {
 }
 
 html[data-theme='dark'] .journal-full.lavender {
-  background:
-    linear-gradient(
-      135deg,
-      #d6c9f1,
-      #f8f4ff
-    ) !important;
+  background: linear-gradient(135deg, #d6c9f1, #f8f4ff) !important;
 
   --journal-surface: #fbf9ff;
   --journal-border: #b9a5df;
@@ -2099,12 +1892,7 @@ html[data-theme='dark'] .journal-full.lavender {
 }
 
 html[data-theme='dark'] .journal-full.sand {
-  background:
-    linear-gradient(
-      135deg,
-      #ead1a4,
-      #fff6df
-    ) !important;
+  background: linear-gradient(135deg, #ead1a4, #fff6df) !important;
 
   --journal-surface: #fffaf0;
   --journal-border: #cfad73;
@@ -2112,12 +1900,7 @@ html[data-theme='dark'] .journal-full.sand {
 }
 
 html[data-theme='dark'] .journal-full.superhero {
-  background:
-    linear-gradient(
-      135deg,
-      #061632,
-      #1e63a5
-    ) !important;
+  background: linear-gradient(135deg, #061632, #1e63a5) !important;
 
   --journal-surface: #0f2b59;
   --journal-border: #4c96df;
@@ -2125,12 +1908,7 @@ html[data-theme='dark'] .journal-full.superhero {
 }
 
 html[data-theme='dark'] .journal-full.fairytalemagic {
-  background:
-    linear-gradient(
-      135deg,
-      #ffe0ad,
-      #f7b8c4
-    ) !important;
+  background: linear-gradient(135deg, #ffe0ad, #f7b8c4) !important;
 
   --journal-surface: #fff8e6;
   --journal-border: #e6ad78;
@@ -2138,12 +1916,7 @@ html[data-theme='dark'] .journal-full.fairytalemagic {
 }
 
 html[data-theme='dark'] .journal-full.princess {
-  background:
-    linear-gradient(
-      135deg,
-      #ffdcec,
-      #d2b4e9
-    ) !important;
+  background: linear-gradient(135deg, #ffdcec, #d2b4e9) !important;
 
   --journal-surface: #fff8fc;
   --journal-border: #d899bf;
@@ -2151,12 +1924,7 @@ html[data-theme='dark'] .journal-full.princess {
 }
 
 html[data-theme='dark'] .journal-full.pirateadventure {
-  background:
-    repeating-linear-gradient(
-      135deg,
-      #382517 0 8px,
-      #5c3920 8px 16px
-    ) !important;
+  background: repeating-linear-gradient(135deg, #382517 0 8px, #5c3920 8px 16px) !important;
 
   --journal-surface: #432c1a;
   --journal-border: #b4773d;
@@ -2166,12 +1934,7 @@ html[data-theme='dark'] .journal-full.pirateadventure {
 html[data-theme='dark'] .journal-full .journal-hero,
 html[data-theme='dark'] .journal-full .journal-list,
 html[data-theme='dark'] .journal-full .journal-editor {
-  background:
-    color-mix(
-      in srgb,
-      var(--journal-surface) 92%,
-      transparent
-    ) !important;
+  background: color-mix(in srgb, var(--journal-surface) 92%, transparent) !important;
 
   border-color: var(--journal-border) !important;
   color: var(--journal-ink) !important;
@@ -2226,12 +1989,7 @@ html[data-theme='cyberpunk'] .muted {
 html[data-theme='superhero'] :is(input, select, textarea),
 html[data-theme='galaxy'] :is(input, select, textarea),
 html[data-theme='cyberpunk'] :is(input, select, textarea) {
-  background:
-    color-mix(
-      in srgb,
-      var(--t-surface) 85%,
-      #000
-    ) !important;
+  background: color-mix(in srgb, var(--t-surface) 85%, #000) !important;
 
   color: var(--t-ink) !important;
   border-color: var(--t-border) !important;
@@ -2240,12 +1998,7 @@ html[data-theme='cyberpunk'] :is(input, select, textarea) {
 html[data-theme='superhero'] .btn-soft,
 html[data-theme='galaxy'] .btn-soft,
 html[data-theme='cyberpunk'] .btn-soft {
-  background:
-    color-mix(
-      in srgb,
-      var(--t-primary) 18%,
-      var(--t-surface)
-    ) !important;
+  background: color-mix(in srgb, var(--t-primary) 18%, var(--t-surface)) !important;
 
   color: var(--t-ink) !important;
   border: 1px solid var(--t-border) !important;
@@ -2499,8 +2252,7 @@ html[data-theme='galaxy'] .card {
 
   body {
     overscroll-behavior-y: none;
-    padding-bottom:
-      calc(88px + env(safe-area-inset-bottom));
+    padding-bottom: calc(88px + env(safe-area-inset-bottom));
   }
 
   #root,
@@ -2519,15 +2271,11 @@ html[data-theme='galaxy'] .card {
   .app-shell main {
     margin-left: 0 !important;
     width: 100% !important;
-    padding-bottom:
-      calc(94px + env(safe-area-inset-bottom));
+    padding-bottom: calc(94px + env(safe-area-inset-bottom));
   }
 
   .page-content {
-    padding:
-      22px
-      14px
-      calc(108px + env(safe-area-inset-bottom)) !important;
+    padding: 22px 14px calc(108px + env(safe-area-inset-bottom)) !important;
 
     min-height: 100dvh;
     overflow: visible !important;
@@ -2538,17 +2286,9 @@ html[data-theme='galaxy'] .card {
     top: 0;
     z-index: 5;
     margin: -22px -14px 20px;
-    padding:
-      20px
-      14px
-      14px;
+    padding: 20px 14px 14px;
 
-    background:
-      color-mix(
-        in srgb,
-        var(--t-bg, #fafafa) 94%,
-        transparent
-      );
+    background: color-mix(in srgb, var(--t-bg, #fafafa) 94%, transparent);
 
     backdrop-filter: blur(12px);
     align-items: flex-start;
@@ -2604,8 +2344,7 @@ html[data-theme='galaxy'] .card {
     padding: 6px !important;
     left: 10px !important;
     right: 10px !important;
-    bottom:
-      calc(10px + env(safe-area-inset-bottom)) !important;
+    bottom: calc(10px + env(safe-area-inset-bottom)) !important;
     border-radius: 15px !important;
     max-width: none !important;
   }
@@ -2620,8 +2359,7 @@ html[data-theme='galaxy'] .card {
 
   .global-ai {
     right: 14px !important;
-    bottom:
-      calc(76px + env(safe-area-inset-bottom)) !important;
+    bottom: calc(76px + env(safe-area-inset-bottom)) !important;
     z-index: 12 !important;
   }
 
@@ -2922,9 +2660,7 @@ html[data-theme='galaxy'] .card {
   .month-view {
     overflow-x: auto !important;
     scrollbar-width: thin;
-    scrollbar-color:
-      var(--t-primary, #777)
-      transparent;
+    scrollbar-color: var(--t-primary, #777) transparent;
   }
 
   .notes-list,
@@ -2933,9 +2669,7 @@ html[data-theme='galaxy'] .card {
   .ai-result {
     overflow-y: auto !important;
     scrollbar-width: thin;
-    scrollbar-color:
-      var(--t-primary, #777)
-      transparent;
+    scrollbar-color: var(--t-primary, #777) transparent;
   }
 
   .calendar-actions::-webkit-scrollbar,
@@ -3129,4 +2863,3 @@ html[data-theme='superhero'] .task-text {
 .todo-item a {
   color: var(--t-ink) !important;
 }
-

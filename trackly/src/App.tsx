@@ -17,7 +17,7 @@ import { ResetPassword } from './pages/ResetPassword';
 import { AppLayout } from './layouts/AppLayout';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { useTracklyStore } from './stores/useTracklyStore';
-import type {AppTheme} from './themes/themeConfig';
+import type { AppTheme } from './themes/themeConfig';
 import { CloudSync } from './contexts/CloudSync';
 
 function Workspace({ children }: { children: ReactNode }) {
@@ -28,26 +28,100 @@ function Workspace({ children }: { children: ReactNode }) {
 }
 function Theme() {
   const theme = useTracklyStore((state) => state.preferences.theme);
-  useEffect(() => { document.documentElement.dataset.theme = theme as AppTheme; }, [theme]);
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme as AppTheme;
+  }, [theme]);
   return null;
 }
 function Routes() {
-  return <><Theme /><CloudSync /><Switch>
-    <Route path="/" component={Landing} />
-    <Route path="/sign-in">{() => <AuthPage mode="sign-in" />}</Route>
-    <Route path="/sign-up">{() => <AuthPage mode="sign-up" />}</Route>
-    <Route path="/reset-password" component={ResetPassword} />
-    <Route path="/app">{() => <Workspace><Dashboard /></Workspace>}</Route>
-    <Route path="/tasks">{() => <Workspace><Tasks /></Workspace>}</Route>
-    <Route path="/habits">{() => <Workspace><Habits /></Workspace>}</Route>
-    <Route path="/timetable">{() => <Workspace><Timetable /></Workspace>}</Route>
-    <Route path="/analytics">{() => <Workspace><Analytics /></Workspace>}</Route>
-    <Route path="/assistant">{() => <Workspace><Assistant /></Workspace>}</Route>
-    <Route path="/notes">{() => <Workspace><Notes /></Workspace>}</Route>
-    <Route path="/journal">{() => <Workspace><Journal /></Workspace>}</Route>
-    <Route path="/study-files">{() => <Workspace><StudyFiles /></Workspace>}</Route>
-    <Route path="/settings">{() => <Workspace><Settings /></Workspace>}</Route>
-    <Route>{() => <Landing />}</Route>
-  </Switch></>;
+  return (
+    <>
+      <Theme />
+      <CloudSync />
+      <Switch>
+        <Route path="/" component={Landing} />
+        <Route path="/sign-in">{() => <AuthPage mode="sign-in" />}</Route>
+        <Route path="/sign-up">{() => <AuthPage mode="sign-up" />}</Route>
+        <Route path="/reset-password" component={ResetPassword} />
+        <Route path="/app">
+          {() => (
+            <Workspace>
+              <Dashboard />
+            </Workspace>
+          )}
+        </Route>
+        <Route path="/tasks">
+          {() => (
+            <Workspace>
+              <Tasks />
+            </Workspace>
+          )}
+        </Route>
+        <Route path="/habits">
+          {() => (
+            <Workspace>
+              <Habits />
+            </Workspace>
+          )}
+        </Route>
+        <Route path="/timetable">
+          {() => (
+            <Workspace>
+              <Timetable />
+            </Workspace>
+          )}
+        </Route>
+        <Route path="/analytics">
+          {() => (
+            <Workspace>
+              <Analytics />
+            </Workspace>
+          )}
+        </Route>
+        <Route path="/assistant">
+          {() => (
+            <Workspace>
+              <Assistant />
+            </Workspace>
+          )}
+        </Route>
+        <Route path="/notes">
+          {() => (
+            <Workspace>
+              <Notes />
+            </Workspace>
+          )}
+        </Route>
+        <Route path="/journal">
+          {() => (
+            <Workspace>
+              <Journal />
+            </Workspace>
+          )}
+        </Route>
+        <Route path="/study-files">
+          {() => (
+            <Workspace>
+              <StudyFiles />
+            </Workspace>
+          )}
+        </Route>
+        <Route path="/settings">
+          {() => (
+            <Workspace>
+              <Settings />
+            </Workspace>
+          )}
+        </Route>
+        <Route>{() => <Landing />}</Route>
+      </Switch>
+    </>
+  );
 }
-export default function App() { return <AuthProvider><Routes /></AuthProvider>; }
+export default function App() {
+  return (
+    <AuthProvider>
+      <Routes />
+    </AuthProvider>
+  );
+}

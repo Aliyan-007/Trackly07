@@ -51,13 +51,10 @@ export function Landing() {
             gap: 9,
             alignItems: 'center',
             fontWeight: 700,
+            color: '#1c1c1a',
           }}
         >
-          <img
-            src={logo}
-            className="brand-logo"
-            alt="Trackly logo"
-          />
+          <img src={logo} className="brand-logo" alt="Trackly logo" />
           Trackly
         </div>
 
@@ -144,6 +141,7 @@ export function Landing() {
             letterSpacing: '-2.4px',
             margin: '0 auto 22px',
             maxWidth: 820,
+            color: '#1c1c1a',
           }}
         >
           A quieter way to keep up.
@@ -158,8 +156,8 @@ export function Landing() {
             margin: 'auto',
           }}
         >
-          Trackly brings your schedule, coursework, habits, and progress into
-          one considered space—so your attention can stay on learning.
+          Trackly brings your schedule, coursework, habits, and progress into one considered
+          space—so your attention can stay on learning.
         </p>
 
         <div
@@ -183,9 +181,7 @@ export function Landing() {
           </Link>
 
           <a href="#features">
-            <button className="btn btn-soft">
-              See how it works
-            </button>
+            <button className="btn btn-soft">See how it works</button>
           </a>
         </div>
       </section>
@@ -236,6 +232,7 @@ export function Landing() {
                 style={{
                   fontSize: 29,
                   margin: '10px 0 22px',
+                  color: '#1c1c1a',
                 }}
               >
                 Good morning, Maya.
@@ -302,6 +299,7 @@ export function Landing() {
                   style={{
                     fontWeight: 600,
                     marginTop: 8,
+                    color: '#1c1c1a',
                   }}
                 >
                   Finish cognitive science reading
@@ -326,7 +324,6 @@ export function Landing() {
                 }}
               >
                 Today’s habits
-
                 <b
                   style={{
                     float: 'right',
@@ -392,6 +389,7 @@ export function Landing() {
               fontSize: 38,
               letterSpacing: '-1px',
               margin: '10px 0',
+              color: '#1c1c1a',
             }}
           >
             Everything you need. Nothing shouting for attention.
@@ -469,19 +467,16 @@ export function Landing() {
           style={{
             fontSize: 33,
             margin: 0,
+            color: '#1c1c1a',
           }}
         >
           Start with a clearer week.
         </h2>
 
-        <p className="muted">
-          A single place for the plans you want to keep.
-        </p>
+        <p className="muted">A single place for the plans you want to keep.</p>
 
         <Link href="/sign-up">
-          <button className="btn btn-primary">
-            Create your workspace
-          </button>
+          <button className="btn btn-primary">Create your workspace</button>
         </Link>
       </section>
 

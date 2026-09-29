@@ -5,12 +5,7 @@ import { Page } from '../layouts/AppLayout';
 import { useTracklyStore } from '../stores/useTracklyStore';
 import { Modal } from '../components/ui/Modal';
 import { ConfirmDialog } from '../components/ui/ConfirmDialog';
-import {
-  Plus,
-  Search,
-  Trash2,
-  PanelRight,
-} from '../components/shared/Icons';
+import { Plus, Search, Trash2, PanelRight } from '../components/shared/Icons';
 import type { Priority, Task } from '../types';
 
 const priorityClass = {
@@ -25,8 +20,7 @@ function TaskForm({ onClose }: { onClose: () => void }) {
   const [title, setTitle] = useState('');
   const [subject, setSubject] = useState('');
   const [due, setDue] = useState(localDate());
-  const [priority, setPriority] =
-    useState<Priority>('medium');
+  const [priority, setPriority] = useState<Priority>('medium');
 
   return (
     <Modal title="Add a task" onClose={onClose}>
@@ -70,9 +64,7 @@ function TaskForm({ onClose }: { onClose: () => void }) {
           onChange={(e) => setSubject(e.target.value)}
         />
 
-        <div
-          className="task-date-priority"
-        >
+        <div className="task-date-priority">
           <input
             className="input"
             type="date"
@@ -85,9 +77,7 @@ function TaskForm({ onClose }: { onClose: () => void }) {
             className="input"
             aria-label="Priority"
             value={priority}
-            onChange={(e) =>
-              setPriority(e.target.value as Priority)
-            }
+            onChange={(e) => setPriority(e.target.value as Priority)}
           >
             <option value="high">High priority</option>
             <option value="medium">Medium priority</option>
@@ -95,10 +85,7 @@ function TaskForm({ onClose }: { onClose: () => void }) {
           </select>
         </div>
 
-        <button
-          className="btn btn-primary"
-          type="submit"
-        >
+        <button className="btn btn-primary" type="submit">
           Add task
         </button>
       </form>
@@ -107,25 +94,15 @@ function TaskForm({ onClose }: { onClose: () => void }) {
 }
 
 export function Tasks() {
-  const {
-    tasks,
-    updateTask,
-    deleteTask,
-  } = useTracklyStore();
+  const { tasks, updateTask, deleteTask } = useTracklyStore();
 
   const [q, setQ] = useState('');
   const [add, setAdd] = useState(false);
-  const [selected, setSelected] =
-    useState<Task | null>(null);
-  const [confirmDelete, setConfirmDelete] =
-    useState(false);
+  const [selected, setSelected] = useState<Task | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   const list = tasks.filter(
-    (task) =>
-      !task.archived &&
-      task.title
-        .toLowerCase()
-        .includes(q.toLowerCase())
+    (task) => !task.archived && task.title.toLowerCase().includes(q.toLowerCase()),
   );
 
   return (
@@ -139,23 +116,13 @@ export function Tasks() {
             defaultPrompt="Help me prioritize and break down my current tasks."
           />
 
-          <button
-            className="btn btn-primary"
-            onClick={() => setAdd(true)}
-          >
-            <Plus
-              size={16}
-              style={{ verticalAlign: 'middle' }}
-            />{' '}
-            Add task
+          <button className="btn btn-primary" onClick={() => setAdd(true)}>
+            <Plus size={16} style={{ verticalAlign: 'middle' }} /> Add task
           </button>
         </>
       }
     >
-      <div
-        className="card"
-        style={{ padding: 14 }}
-      >
+      <div className="card" style={{ padding: 14 }}>
         {/* Search and Filter */}
         <div
           style={{
@@ -185,73 +152,40 @@ export function Tasks() {
               aria-label="Search tasks"
               placeholder="Search your tasks"
               value={q}
-              onChange={(e) =>
-                setQ(e.target.value)
-              }
+              onChange={(e) => setQ(e.target.value)}
               style={{
                 paddingLeft: 34,
               }}
             />
           </div>
 
-          <button className="btn btn-soft">
-            All work
-          </button>
+          <button className="btn btn-soft">All work</button>
         </div>
 
         {/* Task Groups */}
-        {(
-          ['doing', 'todo', 'done'] as const
-        ).map((status) => {
-          const rows = list.filter(
-            (task) => task.status === status
-          );
+        {(['doing', 'todo', 'done'] as const).map((status) => {
+          const rows = list.filter((task) => task.status === status);
 
           return (
-            <section
-              key={status}
-              className="task-group"
-              style={{ marginTop: 18 }}
-            >
-              <h2
-                  className="task-group-heading"
-              >
-                {status === 'doing'
-                  ? 'In progress'
-                  : status === 'todo'
-                  ? 'Up next'
-                  : 'Completed'}{' '}
-                <span style={{ fontWeight: 400 }}>
-                  ({rows.length})
-                </span>
+            <section key={status} className="task-group" style={{ marginTop: 18 }}>
+              <h2 className="task-group-heading">
+                {status === 'doing' ? 'In progress' : status === 'todo' ? 'Up next' : 'Completed'}{' '}
+                <span style={{ fontWeight: 400 }}>({rows.length})</span>
               </h2>
 
               {rows.map((task) => (
-                <div
-                  key={task.id}
-                  className="task-row"
-                  data-status={task.status}
-                >
+                <div key={task.id} className="task-row" data-status={task.status}>
                   {/* Complete Button */}
                   <button
-                    aria-label={
-                      'Mark ' +
-                      task.title +
-                      ' complete'
-                    }
+                    aria-label={'Mark ' + task.title + ' complete'}
                     className={'task-toggle' + (task.status === 'done' ? ' completed' : '')}
                     onClick={() =>
                       updateTask(task.id, {
-                        status:
-                          task.status === 'done'
-                            ? 'todo'
-                            : 'done',
+                        status: task.status === 'done' ? 'todo' : 'done',
                       })
                     }
                   >
-                    {task.status === 'done'
-                      ? '✓'
-                      : ''}
+                    {task.status === 'done' ? '✓' : ''}
                   </button>
 
                   {/* Task Information */}
@@ -259,34 +193,23 @@ export function Tasks() {
                     type="button"
                     className="task-info"
                     aria-label={'Edit task: ' + task.title}
-                    onClick={() =>
-                      setSelected(task)
-                    }
+                    onClick={() => setSelected(task)}
                   >
-                    <div
-                      className="task-title"
-                    >
-                      {task.title}
-                    </div>
+                    <div className="task-title">{task.title}</div>
 
                     <div className="muted task-meta">
-                      {task.subject} · due{' '}
-                      {task.due}
+                      {task.subject} · due {task.due}
                     </div>
                   </button>
 
                   {/* Priority */}
-                  <span
-                    className={'pill task-priority ' + priorityClass[task.priority]}
-                  >
+                  <span className={'pill task-priority ' + priorityClass[task.priority]}>
                     {task.priority}
                   </span>
 
                   {/* Open Details */}
                   <button
-                    onClick={() =>
-                      setSelected(task)
-                    }
+                    onClick={() => setSelected(task)}
                     aria-label="Open task"
                     className="task-open"
                   >
@@ -313,18 +236,11 @@ export function Tasks() {
       </div>
 
       {/* Add Task Modal */}
-      {add && (
-        <TaskForm
-          onClose={() => setAdd(false)}
-        />
-      )}
+      {add && <TaskForm onClose={() => setAdd(false)} />}
 
       {/* Task Details Modal */}
       {selected && (
-        <Modal
-          title="Task details"
-          onClose={() => setSelected(null)}
-        >
+        <Modal title="Task details" onClose={() => setSelected(null)}>
           <div
             style={{
               display: 'grid',
@@ -400,10 +316,7 @@ export function Tasks() {
               <button
                 className="btn btn-soft"
                 onClick={() => {
-                  const newStatus =
-                    selected.status === 'done'
-                      ? 'todo'
-                      : 'done';
+                  const newStatus = selected.status === 'done' ? 'todo' : 'done';
 
                   updateTask(selected.id, {
                     status: newStatus,
@@ -415,17 +328,10 @@ export function Tasks() {
                   });
                 }}
               >
-                {selected.status === 'done'
-                  ? 'Reopen task'
-                  : 'Mark complete'}
+                {selected.status === 'done' ? 'Reopen task' : 'Mark complete'}
               </button>
 
-              <button
-                className="btn btn-danger"
-                onClick={() =>
-                  setConfirmDelete(true)
-                }
-              >
+              <button className="btn btn-danger" onClick={() => setConfirmDelete(true)}>
                 <Trash2
                   size={15}
                   style={{
@@ -444,9 +350,7 @@ export function Tasks() {
         <ConfirmDialog
           title="Delete this task?"
           description={`"${selected.title}" will be removed from your workspace. You cannot undo this action.`}
-          onCancel={() =>
-            setConfirmDelete(false)
-          }
+          onCancel={() => setConfirmDelete(false)}
           onConfirm={() => {
             deleteTask(selected.id);
             setConfirmDelete(false);

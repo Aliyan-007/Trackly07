@@ -45,13 +45,13 @@ Trackly is a student productivity workspace. It brings together planning, tasks,
 
 ### Problems solved
 
-| Problem | Trackly solution |
-|---|---|
-| Classes and deadlines are scattered across apps | Calendar/timetable and task workspace |
-| Users forget what to do next | Overview cards, deadlines, live schedule, and priorities |
-| Habits are difficult to maintain | Daily check-ins, saved history, and real streaks |
-| Study material is hard to turn into revision notes | Private PDF/PPTX upload and AI note generation |
-| Productivity tools feel generic | Persistent visual themes and contextual AI assistance |
+| Problem                                            | Trackly solution                                         |
+| -------------------------------------------------- | -------------------------------------------------------- |
+| Classes and deadlines are scattered across apps    | Calendar/timetable and task workspace                    |
+| Users forget what to do next                       | Overview cards, deadlines, live schedule, and priorities |
+| Habits are difficult to maintain                   | Daily check-ins, saved history, and real streaks         |
+| Study material is hard to turn into revision notes | Private PDF/PPTX upload and AI note generation           |
+| Productivity tools feel generic                    | Persistent visual themes and contextual AI assistance    |
 
 ### Product principles
 
@@ -64,23 +64,23 @@ Trackly is a student productivity workspace. It brings together planning, tasks,
 
 ## 2. Technology Stack
 
-| Technology | Version/configuration | Purpose | Why used | Alternatives |
-|---|---:|---|---|---|
-| React | 19 | Component UI rendering | Mature component model and ecosystem | Vue, Svelte, Angular |
-| TypeScript | ~5.7 | Static typing | Safer refactoring and typed models | JavaScript |
-| Vite | ^6.1 | Dev server and production bundler | Fast development and optimized output | Next.js, Parcel, Webpack |
-| Wouter | ^3.3 | SPA routing | Small routing library with protected-route support | React Router |
-| Zustand | ^5.0 | Global client state | Minimal API and Local Storage middleware | Redux Toolkit, Jotai |
-| Supabase JS | ^2.49 | Auth, Storage, database, Realtime | Managed Auth/Postgres/Storage with RLS | Firebase, Appwrite |
-| Recharts | ^2.15 | Charts | React-friendly analytics charts | Nivo, Chart.js |
-| Lucide React | ^0.468 | Icons | Consistent accessible SVG icon system | Heroicons, Phosphor |
-| pdfjs-dist | ^5.6 | PDF text extraction | Reads text-based PDFs in the browser | Server OCR, PSPDFKit |
-| JSZip | ^3.10 | PPTX extraction | Reads XML inside `.pptx` archives | Server-side LibreOffice conversion |
-| Netlify Functions | Platform feature | Server-only AI/email endpoints | Keeps private keys out of browser code | Supabase Edge Functions, Express host |
-| Tailwind CSS | ^3.4, installed | Utility CSS availability | Available for future incremental use | CSS modules |
-| PostCSS/Autoprefixer | ^8.5/^10.4 | CSS processing | Tailwind/PostCSS compatibility | None for current handwritten CSS |
-| `@vitejs/plugin-react` | ^4.4 | React transform | Vite React support | SWC React plugin |
-| Node types / React types | Dev dependencies | Type declarations | TypeScript compilation | N/A |
+| Technology               | Version/configuration | Purpose                           | Why used                                           | Alternatives                          |
+| ------------------------ | --------------------: | --------------------------------- | -------------------------------------------------- | ------------------------------------- |
+| React                    |                    19 | Component UI rendering            | Mature component model and ecosystem               | Vue, Svelte, Angular                  |
+| TypeScript               |                  ~5.7 | Static typing                     | Safer refactoring and typed models                 | JavaScript                            |
+| Vite                     |                  ^6.1 | Dev server and production bundler | Fast development and optimized output              | Next.js, Parcel, Webpack              |
+| Wouter                   |                  ^3.3 | SPA routing                       | Small routing library with protected-route support | React Router                          |
+| Zustand                  |                  ^5.0 | Global client state               | Minimal API and Local Storage middleware           | Redux Toolkit, Jotai                  |
+| Supabase JS              |                 ^2.49 | Auth, Storage, database, Realtime | Managed Auth/Postgres/Storage with RLS             | Firebase, Appwrite                    |
+| Recharts                 |                 ^2.15 | Charts                            | React-friendly analytics charts                    | Nivo, Chart.js                        |
+| Lucide React             |                ^0.468 | Icons                             | Consistent accessible SVG icon system              | Heroicons, Phosphor                   |
+| pdfjs-dist               |                  ^5.6 | PDF text extraction               | Reads text-based PDFs in the browser               | Server OCR, PSPDFKit                  |
+| JSZip                    |                 ^3.10 | PPTX extraction                   | Reads XML inside `.pptx` archives                  | Server-side LibreOffice conversion    |
+| Netlify Functions        |      Platform feature | Server-only AI/email endpoints    | Keeps private keys out of browser code             | Supabase Edge Functions, Express host |
+| Tailwind CSS             |       ^3.4, installed | Utility CSS availability          | Available for future incremental use               | CSS modules                           |
+| PostCSS/Autoprefixer     |            ^8.5/^10.4 | CSS processing                    | Tailwind/PostCSS compatibility                     | None for current handwritten CSS      |
+| `@vitejs/plugin-react`   |                  ^4.4 | React transform                   | Vite React support                                 | SWC React plugin                      |
+| Node types / React types |      Dev dependencies | Type declarations                 | TypeScript compilation                             | N/A                                   |
 
 ### Technologies **not currently used as runtime architecture**
 
@@ -192,22 +192,22 @@ sequenceDiagram
 
 **Purpose:** Declares public and protected routes and mounts global providers.
 
-| Route | Page | Access |
-|---|---|---|
-| `/` | Landing | Public |
-| `/sign-in` | AuthPage sign-in mode | Public |
-| `/sign-up` | AuthPage sign-up mode | Public |
-| `/reset-password` | ResetPassword | Public/recovery session |
-| `/app` | Dashboard | Protected when Supabase configured |
-| `/timetable` | Timetable | Protected |
-| `/tasks` | Tasks | Protected |
-| `/habits` | Habits | Protected |
-| `/analytics` | Analytics | Protected |
-| `/notes` | Notes | Protected |
-| `/journal` | Journal | Protected |
-| `/study-files` | StudyFiles | Protected |
-| `/assistant` | Assistant | Protected |
-| `/settings` | Settings | Protected |
+| Route             | Page                  | Access                             |
+| ----------------- | --------------------- | ---------------------------------- |
+| `/`               | Landing               | Public                             |
+| `/sign-in`        | AuthPage sign-in mode | Public                             |
+| `/sign-up`        | AuthPage sign-up mode | Public                             |
+| `/reset-password` | ResetPassword         | Public/recovery session            |
+| `/app`            | Dashboard             | Protected when Supabase configured |
+| `/timetable`      | Timetable             | Protected                          |
+| `/tasks`          | Tasks                 | Protected                          |
+| `/habits`         | Habits                | Protected                          |
+| `/analytics`      | Analytics             | Protected                          |
+| `/notes`          | Notes                 | Protected                          |
+| `/journal`        | Journal               | Protected                          |
+| `/study-files`    | StudyFiles            | Protected                          |
+| `/assistant`      | Assistant             | Protected                          |
+| `/settings`       | Settings              | Protected                          |
 
 `Workspace` waits for Auth restoration. If Supabase is configured but no session exists, it redirects to `/sign-in`.
 
@@ -230,33 +230,33 @@ sequenceDiagram
 
 ### Route pages
 
-| File | Responsibility | Main state/dependencies | Safe customization |
-|---|---|---|---|
-| `Landing.tsx` | Product marketing page | Wouter links, logo | Copy, sections, screenshots, CTA text |
-| `Auth.tsx` | Email/Google sign-in and registration | `AuthContext`, local form state | Labels, validation text, onboarding fields |
-| `ResetPassword.tsx` | Password recovery/update | `AuthContext` | Recovery copy and password policy |
-| `Dashboard.tsx` | Daily overview | Zustand tasks/habits/schedule, live schedule | Cards, summaries, contextual actions |
-| `Timetable.tsx` | Calendar views and event creation/editing | Zustand schedule/tasks, `AISchedule` | Calendar views, event forms, colors |
-| `Tasks.tsx` | Search, complete, edit, delete tasks | Zustand task methods, `ConfirmDialog` | Task fields, filters, grouping |
-| `Habits.tsx` | Suggestions, check-ins, heatmap, streaks | Zustand habits | Suggestions, colors, habit metadata |
-| `Analytics.tsx` | Data-driven charts/empty state | Zustand tasks/habits/schedule | Metrics and chart definitions |
-| `Notes.tsx` | Local note writing and simple tools | Local Storage | Add richer editor or cloud persistence |
-| `Journal.tsx` | Local journal entries/theme selection | Local Storage | Prompts, moods, theme presets |
-| `StudyFiles.tsx` | PDF/PPTX upload and AI note generation | Supabase Storage, PDF.js, JSZip, AI service | File limit, generated-note template |
-| `Assistant.tsx` | Persistent AI workspace conversation | Zustand and Local Storage | Action schemas, prompts, history UX |
-| `Settings.tsx` | Profile, theme, reminders, data actions | AuthContext/Zustand | Preferences and export behavior |
+| File                | Responsibility                            | Main state/dependencies                      | Safe customization                         |
+| ------------------- | ----------------------------------------- | -------------------------------------------- | ------------------------------------------ |
+| `Landing.tsx`       | Product marketing page                    | Wouter links, logo                           | Copy, sections, screenshots, CTA text      |
+| `Auth.tsx`          | Email/Google sign-in and registration     | `AuthContext`, local form state              | Labels, validation text, onboarding fields |
+| `ResetPassword.tsx` | Password recovery/update                  | `AuthContext`                                | Recovery copy and password policy          |
+| `Dashboard.tsx`     | Daily overview                            | Zustand tasks/habits/schedule, live schedule | Cards, summaries, contextual actions       |
+| `Timetable.tsx`     | Calendar views and event creation/editing | Zustand schedule/tasks, `AISchedule`         | Calendar views, event forms, colors        |
+| `Tasks.tsx`         | Search, complete, edit, delete tasks      | Zustand task methods, `ConfirmDialog`        | Task fields, filters, grouping             |
+| `Habits.tsx`        | Suggestions, check-ins, heatmap, streaks  | Zustand habits                               | Suggestions, colors, habit metadata        |
+| `Analytics.tsx`     | Data-driven charts/empty state            | Zustand tasks/habits/schedule                | Metrics and chart definitions              |
+| `Notes.tsx`         | Local note writing and simple tools       | Local Storage                                | Add richer editor or cloud persistence     |
+| `Journal.tsx`       | Local journal entries/theme selection     | Local Storage                                | Prompts, moods, theme presets              |
+| `StudyFiles.tsx`    | PDF/PPTX upload and AI note generation    | Supabase Storage, PDF.js, JSZip, AI service  | File limit, generated-note template        |
+| `Assistant.tsx`     | Persistent AI workspace conversation      | Zustand and Local Storage                    | Action schemas, prompts, history UX        |
+| `Settings.tsx`      | Profile, theme, reminders, data actions   | AuthContext/Zustand                          | Preferences and export behavior            |
 
 ### Shared components
 
-| File | What it does | Used by |
-|---|---|---|
-| `components/shared/Icons.tsx` | Re-exports selected Lucide icons from one location | Pages/layouts/components |
-| `ContextualAI.tsx` | Section-scoped AI modal with starter prompt | Dashboard, tasks, habits, notes, journal |
-| `AppErrorBoundary.tsx` | Catches rendering exceptions and shows recovery UI | `main.tsx` if mounted |
-| `components/ui/Modal.tsx` | Accessible modal shell with overlay/close behavior | Forms and dialogs |
-| `ConfirmDialog.tsx` | Project-styled destructive confirmation dialog | Task deletion |
-| `components/timetable/AISchedule.tsx` | AI schedule proposal UI | Timetable |
-| `RealtimeSchedule.tsx` | Device-time schedule summary | Dashboard |
+| File                                  | What it does                                       | Used by                                  |
+| ------------------------------------- | -------------------------------------------------- | ---------------------------------------- |
+| `components/shared/Icons.tsx`         | Re-exports selected Lucide icons from one location | Pages/layouts/components                 |
+| `ContextualAI.tsx`                    | Section-scoped AI modal with starter prompt        | Dashboard, tasks, habits, notes, journal |
+| `AppErrorBoundary.tsx`                | Catches rendering exceptions and shows recovery UI | `main.tsx` if mounted                    |
+| `components/ui/Modal.tsx`             | Accessible modal shell with overlay/close behavior | Forms and dialogs                        |
+| `ConfirmDialog.tsx`                   | Project-styled destructive confirmation dialog     | Task deletion                            |
+| `components/timetable/AISchedule.tsx` | AI schedule proposal UI                            | Timetable                                |
+| `RealtimeSchedule.tsx`                | Device-time schedule summary                       | Dashboard                                |
 
 ### Example component flow: task edit
 
@@ -289,12 +289,12 @@ preferences: Preferences
 Primary actions:
 
 ```ts
-addTask, updateTask, deleteTask
-addHabit, toggleHabit, deleteHabit
-addSchedule, updateSchedule, deleteSchedule
-setPreferences
-reset
-hydrate
+(addTask, updateTask, deleteTask);
+(addHabit, toggleHabit, deleteHabit);
+(addSchedule, updateSchedule, deleteSchedule);
+setPreferences;
+reset;
+hydrate;
 ```
 
 `persist(...)` saves a serializable subset under Local Storage key:
@@ -308,13 +308,13 @@ trackly-workspace
 
 ### Local page storage
 
-| Key | Owner | Content |
-|---|---|---|
-| `trackly-notes` | Notes page | Note list in current browser |
-| `trackly-journal` | Journal page | Journal entries in current browser |
-| `trackly-journal-theme` | Journal page | Selected journal-only theme |
-| `trackly-ai-history` | Assistant page | Conversation history |
-| `trackly-study-uploads-<user>-<date>` | StudyFiles | Daily upload counter |
+| Key                                   | Owner          | Content                            |
+| ------------------------------------- | -------------- | ---------------------------------- |
+| `trackly-notes`                       | Notes page     | Note list in current browser       |
+| `trackly-journal`                     | Journal page   | Journal entries in current browser |
+| `trackly-journal-theme`               | Journal page   | Selected journal-only theme        |
+| `trackly-ai-history`                  | Assistant page | Conversation history               |
+| `trackly-study-uploads-<user>-<date>` | StudyFiles     | Daily upload counter               |
 
 These keys are browser-local. Clearing browser storage removes them. To sync Notes/Journal across devices, migrate them into the Zustand/Supabase workspace payload or normalized Supabase tables.
 
@@ -326,9 +326,9 @@ These keys are browser-local. Clearing browser storage removes them. To sync Not
 
 The SQL file creates:
 
-| Table | Primary key | Purpose |
-|---|---|---|
-| `public.profiles` | `id` → `auth.users.id` | Profile name/role/avatar metadata |
+| Table                       | Primary key                 | Purpose                              |
+| --------------------------- | --------------------------- | ------------------------------------ |
+| `public.profiles`           | `id` → `auth.users.id`      | Profile name/role/avatar metadata    |
 | `public.trackly_workspaces` | `user_id` → `auth.users.id` | JSON payload for user workspace data |
 
 `trackly_workspaces.payload` is JSONB. A typical payload is:
@@ -381,16 +381,16 @@ Storage policies must restrict the first folder name to `auth.uid()::text`.
 Provides:
 
 ```ts
-user
-loading
-configured
-signInWithGoogle()
-signIn(email, password)
-signUp(email, password, fullName, role)
-sendPasswordReset(email)
-updatePassword(password)
-signOut()
-updateProfile(fullName)
+user;
+loading;
+configured;
+signInWithGoogle();
+signIn(email, password);
+signUp(email, password, fullName, role);
+sendPasswordReset(email);
+updatePassword(password);
+signOut();
+updateProfile(fullName);
 ```
 
 ### Authentication rules
@@ -441,11 +441,11 @@ AI_MODEL
 
 Modes:
 
-| Mode | Intended result |
-|---|---|
-| default/general | Plain student-help response |
-| `timetable` | JSON schedule suggestions |
-| `workspace` | JSON action proposal such as complete task, toggle habit, add schedule |
+| Mode            | Intended result                                                        |
+| --------------- | ---------------------------------------------------------------------- |
+| default/general | Plain student-help response                                            |
+| `timetable`     | JSON schedule suggestions                                              |
+| `workspace`     | JSON action proposal such as complete task, toggle habit, add schedule |
 
 The client must preview changes and call store actions only after user approval.
 
@@ -477,12 +477,12 @@ sequenceDiagram
 
 ### Files
 
-| File | Role |
-|---|---|
-| `src/themes/themeConfig.ts` | Theme identifiers and labels |
-| `src/styles/index.css` | Global CSS, tokens, responsive rules, theme overrides |
-| `Settings.tsx` | Theme selection UI |
-| `App.tsx` | Writes selected theme to `document.documentElement.dataset.theme` |
+| File                        | Role                                                              |
+| --------------------------- | ----------------------------------------------------------------- |
+| `src/themes/themeConfig.ts` | Theme identifiers and labels                                      |
+| `src/styles/index.css`      | Global CSS, tokens, responsive rules, theme overrides             |
+| `Settings.tsx`              | Theme selection UI                                                |
+| `App.tsx`                   | Writes selected theme to `document.documentElement.dataset.theme` |
 
 ### Theme flow
 
@@ -589,22 +589,22 @@ If task/habit/schedule data is empty, Insights shows a meaningful empty state. I
 
 ### Browser-safe Vite variables
 
-| Variable | Purpose | Example |
-|---|---|---|
-| `VITE_SUPABASE_URL` | Supabase project URL | `https://project.supabase.co` |
-| `VITE_SUPABASE_ANON_KEY` | Public anonymous client key | Supabase anon/public key |
+| Variable                 | Purpose                     | Example                       |
+| ------------------------ | --------------------------- | ----------------------------- |
+| `VITE_SUPABASE_URL`      | Supabase project URL        | `https://project.supabase.co` |
+| `VITE_SUPABASE_ANON_KEY` | Public anonymous client key | Supabase anon/public key      |
 
 These are exposed in the browser by design. Never use a service-role key here.
 
 ### Server-only Netlify variables
 
-| Variable | Purpose |
-|---|---|
-| `AI_API_URL` | Groq/OpenAI-compatible chat endpoint |
-| `AI_API_KEY` | Private AI provider key |
-| `AI_MODEL` | AI model identifier |
-| `RESEND_API_KEY` | Optional private Resend key |
-| `RESEND_FROM` | Verified sender address |
+| Variable         | Purpose                              |
+| ---------------- | ------------------------------------ |
+| `AI_API_URL`     | Groq/OpenAI-compatible chat endpoint |
+| `AI_API_KEY`     | Private AI provider key              |
+| `AI_MODEL`       | AI model identifier                  |
+| `RESEND_API_KEY` | Optional private Resend key          |
+| `RESEND_FROM`    | Verified sender address              |
 
 ### Netlify secrets scanning
 
@@ -697,20 +697,20 @@ Use `Suspense` with a minimal loading fallback around lazy routes.
 
 ## 17. Customization Guide
 
-| Desired change | Primary file(s) |
-|---|---|
-| App name, marketing copy | `Landing.tsx`, `index.html` |
-| Brand logo/favicon | `src/assets/trackly-logo.png`, `public/favicon.png` |
-| Sidebar sections/icons | `AppLayout.tsx`, `Icons.tsx` |
-| Colors/themes | `themeConfig.ts`, `styles/index.css` |
-| Global typography | `styles/index.css` font import and variables |
-| Calendar fields/views | `Timetable.tsx`, `types/index.ts` |
-| Task fields | `types/index.ts`, `Tasks.tsx`, Zustand store |
-| Habit suggestions/streak rules | `Habits.tsx`, `useTracklyStore.ts` |
-| AI prompts | `ContextualAI.tsx`, `Assistant.tsx`, `assistant.mjs` |
-| PDF/PPT size/type limit | `StudyFiles.tsx` (`maxBytes`, accepted MIME list) |
-| AI output format | `netlify/functions/assistant.mjs` |
-| Supabase schema/policies | `supabase/schema.sql` and SQL Editor |
+| Desired change                 | Primary file(s)                                      |
+| ------------------------------ | ---------------------------------------------------- |
+| App name, marketing copy       | `Landing.tsx`, `index.html`                          |
+| Brand logo/favicon             | `src/assets/trackly-logo.png`, `public/favicon.png`  |
+| Sidebar sections/icons         | `AppLayout.tsx`, `Icons.tsx`                         |
+| Colors/themes                  | `themeConfig.ts`, `styles/index.css`                 |
+| Global typography              | `styles/index.css` font import and variables         |
+| Calendar fields/views          | `Timetable.tsx`, `types/index.ts`                    |
+| Task fields                    | `types/index.ts`, `Tasks.tsx`, Zustand store         |
+| Habit suggestions/streak rules | `Habits.tsx`, `useTracklyStore.ts`                   |
+| AI prompts                     | `ContextualAI.tsx`, `Assistant.tsx`, `assistant.mjs` |
+| PDF/PPT size/type limit        | `StudyFiles.tsx` (`maxBytes`, accepted MIME list)    |
+| AI output format               | `netlify/functions/assistant.mjs`                    |
+| Supabase schema/policies       | `supabase/schema.sql` and SQL Editor                 |
 
 ---
 
@@ -787,24 +787,24 @@ Use `Suspense` with a minimal loading fallback around lazy routes.
 
 ### Glossary
 
-| Term | Meaning |
-|---|---|
-| SPA | One HTML page whose JavaScript switches views without full page reloads |
-| RLS | Row Level Security: database rules that protect each user’s rows |
-| OAuth | Delegated login such as Google sign-in |
-| JSONB | PostgreSQL JSON storage type |
-| Zustand | Small React state-management library |
-| Vite | Modern frontend development server and bundler |
-| Netlify Function | Server-side endpoint hosted by Netlify |
-| Environment variable | Configuration value kept outside source code |
-| Hydration | Restoring persisted/cloud state into the in-memory store |
-| Upsert | Insert-or-update database operation |
-| CSP | Browser policy that restricts risky content/script behavior |
-| Local Storage | Browser key/value persistence scoped to a website origin |
-| Realtime | Push updates from database to subscribed clients |
-| MIME type | File format identifier, such as `application/pdf` |
-| PDF.js | Browser library that reads PDF content |
-| PPTX | ZIP/XML-based Microsoft PowerPoint format |
+| Term                 | Meaning                                                                 |
+| -------------------- | ----------------------------------------------------------------------- |
+| SPA                  | One HTML page whose JavaScript switches views without full page reloads |
+| RLS                  | Row Level Security: database rules that protect each user’s rows        |
+| OAuth                | Delegated login such as Google sign-in                                  |
+| JSONB                | PostgreSQL JSON storage type                                            |
+| Zustand              | Small React state-management library                                    |
+| Vite                 | Modern frontend development server and bundler                          |
+| Netlify Function     | Server-side endpoint hosted by Netlify                                  |
+| Environment variable | Configuration value kept outside source code                            |
+| Hydration            | Restoring persisted/cloud state into the in-memory store                |
+| Upsert               | Insert-or-update database operation                                     |
+| CSP                  | Browser policy that restricts risky content/script behavior             |
+| Local Storage        | Browser key/value persistence scoped to a website origin                |
+| Realtime             | Push updates from database to subscribed clients                        |
+| MIME type            | File format identifier, such as `application/pdf`                       |
+| PDF.js               | Browser library that reads PDF content                                  |
+| PPTX                 | ZIP/XML-based Microsoft PowerPoint format                               |
 
 ---
 
@@ -812,17 +812,17 @@ Use `Suspense` with a minimal loading fallback around lazy routes.
 
 All runtime source files are covered in the sections above. The remaining repository files are configuration, generated AI-assistant skill assets, data catalogs, templates, tests, or package lock data. They are not imported by Trackly’s production SPA.
 
-| File/group | Purpose | Edit guidance |
-|---|---|---|
-| `package-lock.json` | Exact dependency graph | Generated by npm; commit it, do not hand edit |
-| `.gitignore` | Prevents secrets/build artifacts from Git | Safe to extend; preserve `.env.local` exclusions |
-| `.env.example` | Example variable names | Safe to edit; never put real values in it |
-| `README.md` | Quick project setup notes | Safe to edit alongside this documentation |
-| `tsconfig.json`, `tsconfig.app.json`, `tsconfig.node.json` | TypeScript compiler behavior | Edit carefully; build may fail if changed incorrectly |
-| `vite.config.ts` | Vite dev/build settings | Safe for aliases/build optimizations after testing |
-| `netlify.toml` | Build, SPA redirect, functions configuration | Critical for Netlify deployment |
-| `public/_redirects` | SPA deep-link fallback | Critical for `/app` and OAuth direct navigation |
-| `.agents/**`, `.claude/**`, etc. | AI coding-assistant skills | Not runtime; remove only if unused |
+| File/group                                                 | Purpose                                      | Edit guidance                                         |
+| ---------------------------------------------------------- | -------------------------------------------- | ----------------------------------------------------- |
+| `package-lock.json`                                        | Exact dependency graph                       | Generated by npm; commit it, do not hand edit         |
+| `.gitignore`                                               | Prevents secrets/build artifacts from Git    | Safe to extend; preserve `.env.local` exclusions      |
+| `.env.example`                                             | Example variable names                       | Safe to edit; never put real values in it             |
+| `README.md`                                                | Quick project setup notes                    | Safe to edit alongside this documentation             |
+| `tsconfig.json`, `tsconfig.app.json`, `tsconfig.node.json` | TypeScript compiler behavior                 | Edit carefully; build may fail if changed incorrectly |
+| `vite.config.ts`                                           | Vite dev/build settings                      | Safe for aliases/build optimizations after testing    |
+| `netlify.toml`                                             | Build, SPA redirect, functions configuration | Critical for Netlify deployment                       |
+| `public/_redirects`                                        | SPA deep-link fallback                       | Critical for `/app` and OAuth direct navigation       |
+| `.agents/**`, `.claude/**`, etc.                           | AI coding-assistant skills                   | Not runtime; remove only if unused                    |
 
 ---
 

@@ -1,1 +1,12 @@
-import {StrictMode} from 'react';import{createRoot}from'react-dom/client';import './styles/index.css';import App from './App';import{AppErrorBoundary}from'./components/shared/AppErrorBoundary';createRoot(document.getElementById('root')!).render(<StrictMode><AppErrorBoundary><App/></AppErrorBoundary></StrictMode>);
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import './styles/index.css';
+import App from './App';
+import { AppErrorBoundary } from './components/shared/AppErrorBoundary';
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <AppErrorBoundary>
+      <App />
+    </AppErrorBoundary>
+  </StrictMode>,
+);

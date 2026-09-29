@@ -7,23 +7,14 @@ import { Modal } from '../components/ui/Modal';
 import { Download, LogOut } from '../components/shared/Icons';
 
 export function Settings() {
-  const {
-    preferences,
-    setPreferences,
-    tasks,
-    habits,
-    schedule,
-    reset,
-  } = useTracklyStore();
+  const { preferences, setPreferences, tasks, habits, schedule, reset } = useTracklyStore();
 
   const { user, updateProfile, signOut } = useAuth();
 
   const [editing, setEditing] = useState(false);
 
   const [name, setName] = useState(
-    user?.user_metadata?.full_name ||
-      user?.email?.split('@')[0] ||
-      ''
+    user?.user_metadata?.full_name || user?.email?.split('@')[0] || '',
   );
 
   const [notice, setNotice] = useState('');
@@ -36,12 +27,9 @@ export function Settings() {
       preferences,
     };
 
-    const blob = new Blob(
-      [JSON.stringify(data, null, 2)],
-      {
-        type: 'application/json',
-      }
-    );
+    const blob = new Blob([JSON.stringify(data, null, 2)], {
+      type: 'application/json',
+    });
 
     const url = URL.createObjectURL(blob);
 
@@ -77,30 +65,18 @@ export function Settings() {
       >
         {/* Profile */}
         <section className="card" style={{ padding: 21 }}>
-          <h2 style={{ fontSize: 15, marginTop: 0 }}>
-            Profile
-          </h2>
+          <h2 style={{ fontSize: 15, marginTop: 0 }}>Profile</h2>
 
-          <p
-            className="muted"
-            style={{ fontSize: 13 }}
-          >
-            {user?.email ||
-              'You are viewing the local demo workspace.'}
+          <p className="muted" style={{ fontSize: 13 }}>
+            {user?.email || 'You are viewing the local demo workspace.'}
           </p>
 
-          <button
-            className="btn btn-soft"
-            onClick={() => setEditing(true)}
-          >
+          <button className="btn btn-soft" onClick={() => setEditing(true)}>
             Edit profile
           </button>
 
           {notice && (
-            <p
-              className="muted"
-              style={{ fontSize: 12 }}
-            >
+            <p className="muted" style={{ fontSize: 12 }}>
               {notice}
             </p>
           )}
@@ -108,14 +84,9 @@ export function Settings() {
 
         {/* Appearance */}
         <section className="card" style={{ padding: 21 }}>
-          <h2 style={{ fontSize: 15, marginTop: 0 }}>
-            Appearance
-          </h2>
+          <h2 style={{ fontSize: 15, marginTop: 0 }}>Appearance</h2>
 
-          <p
-            className="muted"
-            style={{ fontSize: 13 }}
-          >
+          <p className="muted" style={{ fontSize: 13 }}>
             Choose the feel that helps you focus.
           </p>
 
@@ -129,12 +100,7 @@ export function Settings() {
               <button
                 key={theme.id}
                 title={theme.description}
-                className={
-                  'btn ' +
-                  (preferences.theme === theme.id
-                    ? 'btn-primary'
-                    : 'btn-soft')
-                }
+                className={'btn ' + (preferences.theme === theme.id ? 'btn-primary' : 'btn-soft')}
                 onClick={() =>
                   setPreferences({
                     theme: theme.id as AppTheme,
@@ -149,54 +115,44 @@ export function Settings() {
 
         {/* Gentle Reminders */}
         <section className="card" style={{ padding: 21 }}>
-          <h2 style={{ fontSize: 15, marginTop: 0 }}>
-            Gentle reminders
-          </h2>
+          <h2 style={{ fontSize: 15, marginTop: 0 }}>Gentle reminders</h2>
 
-          {Object.entries(preferences.reminders).map(
-            ([key, value]) => (
-              <label
-                key={key}
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  padding: '12px 0',
-                  borderTop: '1px solid #eee',
-                  fontSize: 14,
-                  textTransform: 'capitalize',
-                }}
-              >
-                {key.replace(/([A-Z])/g, ' $1')}
+          {Object.entries(preferences.reminders).map(([key, value]) => (
+            <label
+              key={key}
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                padding: '12px 0',
+                borderTop: '1px solid #eee',
+                fontSize: 14,
+                textTransform: 'capitalize',
+              }}
+            >
+              {key.replace(/([A-Z])/g, ' $1')}
 
-                <input
-                  type="checkbox"
-                  checked={value}
-                  onChange={(e) =>
-                    setPreferences({
-                      reminders: {
-                        ...preferences.reminders,
-                        [key]: e.target.checked,
-                      },
-                    })
-                  }
-                />
-              </label>
-            )
-          )}
+              <input
+                type="checkbox"
+                checked={value}
+                onChange={(e) =>
+                  setPreferences({
+                    reminders: {
+                      ...preferences.reminders,
+                      [key]: e.target.checked,
+                    },
+                  })
+                }
+              />
+            </label>
+          ))}
         </section>
 
         {/* Your Data */}
         <section className="card" style={{ padding: 21 }}>
-          <h2 style={{ fontSize: 15, marginTop: 0 }}>
-            Your data
-          </h2>
+          <h2 style={{ fontSize: 15, marginTop: 0 }}>Your data</h2>
 
-          <p
-            className="muted"
-            style={{ fontSize: 13 }}
-          >
-            Your workspace is saved securely in this browser
-            and syncs when signed in.
+          <p className="muted" style={{ fontSize: 13 }}>
+            Your workspace is saved securely in this browser and syncs when signed in.
           </p>
 
           <div
@@ -207,15 +163,8 @@ export function Settings() {
             }}
           >
             {/* Export Backup */}
-            <button
-              className="btn btn-soft"
-              onClick={exportData}
-            >
-              <Download
-                size={15}
-                style={{ verticalAlign: 'middle' }}
-              />{' '}
-              Export backup
+            <button className="btn btn-soft" onClick={exportData}>
+              <Download size={15} style={{ verticalAlign: 'middle' }} /> Export backup
             </button>
 
             {/* Restore Sample Data */}
@@ -226,11 +175,7 @@ export function Settings() {
                 color: '#a84c42',
               }}
               onClick={() => {
-                if (
-                  confirm(
-                    'Restore Trackly’s sample workspace?'
-                  )
-                ) {
+                if (confirm('Restore Trackly’s sample workspace?')) {
                   reset();
                 }
               }}
@@ -247,11 +192,7 @@ export function Settings() {
               }}
               onClick={() => signOut()}
             >
-              <LogOut
-                size={15}
-                style={{ verticalAlign: 'middle' }}
-              />{' '}
-              Log out
+              <LogOut size={15} style={{ verticalAlign: 'middle' }} /> Log out
             </button>
           </div>
         </section>
@@ -259,10 +200,7 @@ export function Settings() {
 
       {/* Edit Profile Modal */}
       {editing && (
-        <Modal
-          title="Edit profile"
-          onClose={() => setEditing(false)}
-        >
+        <Modal title="Edit profile" onClose={() => setEditing(false)}>
           <form
             onSubmit={save}
             style={{
@@ -277,7 +215,6 @@ export function Settings() {
               }}
             >
               Name
-
               <input
                 className="input"
                 value={name}
@@ -287,9 +224,7 @@ export function Settings() {
               />
             </label>
 
-            <button className="btn btn-primary">
-              Save changes
-            </button>
+            <button className="btn btn-primary">Save changes</button>
           </form>
         </Modal>
       )}

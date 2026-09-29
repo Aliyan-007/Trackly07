@@ -3,6 +3,7 @@
 A calm academic productivity workspace for planning classes, finishing coursework, building routines, and seeing progress.
 
 ## Features
+
 - A focused daily dashboard with schedule, priority work, habits, and a weekly signal
 - Weekly timetable for classes, study sessions, and events
 - Searchable task workflow with priority, completion, and a task detail panel
@@ -12,24 +13,29 @@ A calm academic productivity workspace for planning classes, finishing coursewor
 - Responsive shell, semantic controls, keyboard-native buttons, and Netlify SPA configuration
 
 ## Stack
+
 React 19, TypeScript, Vite, Wouter, Zustand, Recharts, Lucide React, and CSS design tokens. The project is configured for Supabase environment variables (`.env.example`) and can be extended with Supabase Auth without changing the domain stores.
 
 ## Start locally
+
 ```bash
 npm install
 npm run dev
 ```
 
 ## Production build
+
 ```bash
 npm run build
 npm run preview
 ```
 
 ## Deployment
+
 Deploy on Netlify using the included `netlify.toml`. Build command is `npm run build`, publish directory is `dist`. The SPA redirect rule ensures direct navigation to application routes works after deployment.
 
 ## Data and privacy
+
 The demo stores workspace information in `localStorage` under `trackly-workspace`. Use **Settings → Export backup** to download a JSON snapshot. Browser storage is ideal for this local-first prototype; a production multi-device release should add user-scoped Supabase tables, Row Level Security, and migration/sync services.
 
 ## Connect Supabase authentication and real-time sync
@@ -60,7 +66,7 @@ The current function uses the OpenAI-compatible Chat Completions request/respons
 
 ## Design updates
 
-Trackly now uses **Gothic A1** for key heading treatments. Theme preference applies immediately and persists, including a dark reading mode. 
+Trackly now uses **Gothic A1** for key heading treatments. Theme preference applies immediately and persists, including a dark reading mode.
 
 ## Resend email delivery
 

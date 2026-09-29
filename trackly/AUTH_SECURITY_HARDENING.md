@@ -6,16 +6,16 @@ Trackly delegates identity, password hashing, reset-token generation, session is
 
 ## Findings and fixes
 
-| Area | Previous client behavior | Risk | Applied fix / required configuration |
-|---|---|---|---|
-| Sign-up response | Returned raw Supabase errors through `signUp()` | Can expose provider details and support account enumeration | `AuthContext` returns one neutral verification response for all sign-up outcomes. |
-| Password-reset response | Returned raw provider error text | Can disclose whether an email is registered | `sendPasswordReset()` always returns one neutral response. |
-| Sign-in response | Returned raw Supabase error text | Unhelpful and may expose provider behavior | Client returns a neutral generic response for failed login. |
-| Timing | Direct auth calls could visibly vary | Timing can leak limited information | Client enforces a minimum response delay and browser-local retry delay. |
-| Repeated attempts | No client throttle | Poor UX and allows rapid repeated browser attempts | `authGuard.ts` adds escalating browser-local delay. |
-| Email ownership | Earlier project instructions disabled confirmation | Accounts could become active without verified email ownership | Enable **Confirm email** in Supabase for a secure production release. |
-| Password hashing | No custom server code | Risk of accidental insecure custom hashing if added | Use Supabase Auth only. Password hashes are managed by Supabase; do not add client hashing. |
-| Reset tokens | No custom token code | Unsafe if custom tokens are stored/logged | Use `resetPasswordForEmail()` only. Supabase owns token generation, hashing, expiry, and single-use semantics. |
+| Area                    | Previous client behavior                           | Risk                                                          | Applied fix / required configuration                                                                           |
+| ----------------------- | -------------------------------------------------- | ------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| Sign-up response        | Returned raw Supabase errors through `signUp()`    | Can expose provider details and support account enumeration   | `AuthContext` returns one neutral verification response for all sign-up outcomes.                              |
+| Password-reset response | Returned raw provider error text                   | Can disclose whether an email is registered                   | `sendPasswordReset()` always returns one neutral response.                                                     |
+| Sign-in response        | Returned raw Supabase error text                   | Unhelpful and may expose provider behavior                    | Client returns a neutral generic response for failed login.                                                    |
+| Timing                  | Direct auth calls could visibly vary               | Timing can leak limited information                           | Client enforces a minimum response delay and browser-local retry delay.                                        |
+| Repeated attempts       | No client throttle                                 | Poor UX and allows rapid repeated browser attempts            | `authGuard.ts` adds escalating browser-local delay.                                                            |
+| Email ownership         | Earlier project instructions disabled confirmation | Accounts could become active without verified email ownership | Enable **Confirm email** in Supabase for a secure production release.                                          |
+| Password hashing        | No custom server code                              | Risk of accidental insecure custom hashing if added           | Use Supabase Auth only. Password hashes are managed by Supabase; do not add client hashing.                    |
+| Reset tokens            | No custom token code                               | Unsafe if custom tokens are stored/logged                     | Use `resetPasswordForEmail()` only. Supabase owns token generation, hashing, expiry, and single-use semantics. |
 
 ## Important limitation: client throttling is not a security boundary
 
