@@ -1,3 +1,4 @@
+
 import { useMemo, useRef, useState } from 'react';
 import { Page } from '../layouts/AppLayout';
 import { useTracklyStore } from '../stores/useTracklyStore';
@@ -6,58 +7,174 @@ import { Plus, ChevronLeft, ChevronRight, Trash2 } from '../components/shared/Ic
 import { AISchedule } from '../components/timetable/AISchedule';
 import type { ScheduleItem } from '../types';
 import { localDate } from '../utils/date';
+
 const names = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
 type View = 'day' | 'week' | 'month' | 'agenda';
-const mins = (v: string) => {
-  const [a, b] = v.split(':').map(Number);
-  return a * 60 + b;
+
+const DAY_START = 0;
+const DAY_END = 24 * 60;
+const MINUTES_PER_HOUR = 60;
+const PIXELS_PER_MINUTE = 1.1;
+const HOUR_HEIGHT = MINUTES_PER_HOUR * PIXELS_PER_MINUTE;
+
+const mins = (value: string) => {
+  const [hours, minutes] = value.split(':').map(Number);
+  return hours * 60 + minutes;
 };
-const addDays = (d: Date, n: number) => {
-  const x = new Date(d);
-  x.setDate(x.getDate() + n);
-  return x;
+
+const timeFromMinutes = (minutes: number) => {
+  const safeMinutes = Math.max(DAY_START, Math.min(DAY_END, minutes));
+
+  if (safeMinutes === DAY_END) {
+    return '24:00';
+  }
+
+  return `${String(Math.floor(safeMinutes / 60)).padStart(2, '0')}:${String(
+    safeMinutes % 60,
+  ).padStart(2, '0')}`;
 };
-const weekStart = (d: Date) => addDays(d, -d.getDay());
-const sameEvent = (item: { date?: string; day: number }, date: Date) =>
-  item.date ? item.date === localDate(date) : item.day === date.getDay();
+
+const addDays = (date: Date, amount: number) => {
+  const result = new Date(date);
+  result.setDate(result.getDate() + amount);
+  return result;
+};
+
+const weekStart = (date: Date) => addDays(date, -date.getDay());
+
+const sameEvent = (
+  item: Pick<ScheduleItem, 'date' | 'day'>,
+  date: Date,
+) => {
+  return item.date
+    ? item.date === localDate(date)
+    : item.day === date.getDay();
+};
+
+const getEventDate = (item: ScheduleItem, referenceDate: Date) => {
+  if (item.date) {
+    return item.date;
+  }
+
+  return localDate(
+    addDays(weekStart(referenceDate), item.day),
+  );
+};
+
 export function Timetable() {
-  const { schedule, tasks, addSchedule, updateSchedule, deleteSchedule } = useTracklyStore();
-  const [view, setView] = useState<View>('week'),
-    [cursor, setCursor] = useState(new Date()),
-    [add, setAdd] = useState(false),
-    [ai, setAi] = useState(false),
-    [title, setTitle] = useState(''),
-    [date, setDate] = useState(localDate()),
-    [start, setStart] = useState('09:00'),
-    [end, setEnd] = useState('10:00'),
-    [selected, setSelected] = useState<any>(null);
-  const today = localDate(),
-    week = useMemo(() => names.map((_, i) => addDays(weekStart(cursor), i)), [cursor]);
+  const {
+    schedule,
+    tasks,
+    addSchedule,
+    updateSchedule,
+    deleteSchedule,
+  } = useTracklyStore();
+
+  const [view, setView] = useState<View>('week');
+  const [cursor, setCursor] = useState(new Date());
+  const [add, setAdd] = useState(false);
+  const [ai, setAi] = useState(false);
+
+  const [title, setTitle] = useState('');
+  const [date, setDate] = useState(localDate());
+  const [start, setStart] = useState('09:00');
+  const [end, setEnd] = useState('10:00');
+
+  const [selected, setSelected] = useState<ScheduleItem | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+
+  const today = localDate();
+
+  const week = useMemo(
+    () => names.map((_, index) => addDays(weekStart(cursor), index)),
+    [cursor],
+  );
+
   const range =
     view === 'month'
-      ? new Intl.DateTimeFormat(undefined, { month: 'long', year: 'numeric' }).format(cursor)
+      ? new Intl.DateTimeFormat(undefined, {
+          month: 'long',
+          year: 'numeric',
+        }).format(cursor)
       : view === 'week'
-        ? `${new Intl.DateTimeFormat(undefined, { month: 'short', day: 'numeric' }).format(week[0])} — ${new Intl.DateTimeFormat(undefined, { month: 'short', day: 'numeric', year: 'numeric' }).format(week[6])}`
-        : new Intl.DateTimeFormat(undefined, {
-            weekday: 'long',
-            month: 'long',
+        ? `${new Intl.DateTimeFormat(undefined, {
+            month: 'short',
+            day: 'numeric',
+          }).format(week[0])} — ${new Intl.DateTimeFormat(undefined, {
+            month: 'short',
             day: 'numeric',
             year: 'numeric',
-          }).format(cursor);
-  const move = (amount: number) =>
-    setCursor(
-      addDays(cursor, view === 'month' ? amount * 30 : view === 'week' ? amount * 7 : amount),
-    );
-  const visible = (d: Date) =>
-    schedule.filter((item) => sameEvent(item, d)).sort((a, b) => mins(a.start) - mins(b.start));
+          }).format(week[6])}`
+        : view === 'agenda'
+          ? `${new Intl.DateTimeFormat(undefined, {
+              month: 'short',
+              day: 'numeric',
+              year: 'numeric',
+            }).format(cursor)} — ${new Intl.DateTimeFormat(undefined, {
+              month: 'short',
+              day: 'numeric',
+              year: 'numeric',
+            }).format(addDays(cursor, 13))}`
+          : new Intl.DateTimeFormat(undefined, {
+              weekday: 'long',
+              month: 'long',
+              day: 'numeric',
+              year: 'numeric',
+            }).format(cursor);
+
+  const move = (amount: number) => {
+    setCursor((current) => {
+      const next = new Date(current);
+
+      if (view === 'month') {
+        next.setMonth(next.getMonth() + amount);
+      } else if (view === 'week') {
+        next.setDate(next.getDate() + amount * 7);
+      } else if (view === 'agenda') {
+        next.setDate(next.getDate() + amount * 14);
+      } else {
+        next.setDate(next.getDate() + amount);
+      }
+
+      return next;
+    });
+  };
+
+  const visible = (dateValue: Date) =>
+    schedule
+      .filter((item) => sameEvent(item, dateValue))
+      .sort((a, b) => mins(a.start) - mins(b.start));
+
   const calendarDays = useMemo(() => {
-    const first = new Date(cursor.getFullYear(), cursor.getMonth(), 1),
-      start = weekStart(first);
-    return Array.from({ length: 42 }, (_, i) => addDays(start, i));
+    const first = new Date(
+      cursor.getFullYear(),
+      cursor.getMonth(),
+      1,
+    );
+
+    const startOfCalendar = weekStart(first);
+
+    return Array.from(
+      { length: 42 },
+      (_, index) => addDays(startOfCalendar, index),
+    );
   }, [cursor]);
-  function setConfirmDelete(arg0: boolean): void {
-    throw new Error('Function not implemented.');
-  }
+
+  const handleDelete = () => {
+    if (!selected) return;
+
+    deleteSchedule(selected.id);
+    setConfirmDelete(false);
+    setSelected(null);
+  };
+
+  const resetAddForm = () => {
+    setTitle('');
+    setDate(localDate());
+    setStart('09:00');
+    setEnd('10:00');
+  };
 
   return (
     <Page
@@ -65,37 +182,66 @@ export function Timetable() {
       eyebrow={range}
       actions={
         <div className="calendar-actions">
-          <button className="btn btn-soft" onClick={() => move(-1)}>
+          <button
+            className="btn btn-soft"
+            onClick={() => move(-1)}
+            aria-label="Previous"
+          >
             <ChevronLeft size={16} />
           </button>
-          <button className="btn btn-soft" onClick={() => setCursor(new Date())}>
+
+          <button
+            className="btn btn-soft"
+            onClick={() => setCursor(new Date())}
+          >
             Today
           </button>
-          <button className="btn btn-soft" onClick={() => move(1)}>
+
+          <button
+            className="btn btn-soft"
+            onClick={() => move(1)}
+            aria-label="Next"
+          >
             <ChevronRight size={16} />
           </button>
-          <button className="btn btn-soft" onClick={() => setAi(true)}>
+
+          <button
+            className="btn btn-soft"
+            onClick={() => setAi(true)}
+          >
             Ask AI
           </button>
-          <button className="btn btn-primary" onClick={() => setAdd(true)}>
+
+          <button
+            className="btn btn-primary"
+            onClick={() => {
+              resetAddForm();
+              setAdd(true);
+            }}
+          >
             <Plus size={16} /> Add
           </button>
         </div>
       }
     >
       <div className="calendar-views" role="tablist">
-        {(['day', 'week', 'month', 'agenda'] as View[]).map((item) => (
-          <button
-            role="tab"
-            aria-selected={view === item}
-            className={view === item ? 'active' : ''}
-            key={item}
-            onClick={() => setView(item)}
-          >
-            {item === 'agenda' ? 'Hours' : item[0].toUpperCase() + item.slice(1)}
-          </button>
-        ))}
+        {(['day', 'week', 'month', 'agenda'] as View[]).map(
+          (item) => (
+            <button
+              role="tab"
+              aria-selected={view === item}
+              className={view === item ? 'active' : ''}
+              key={item}
+              onClick={() => setView(item)}
+            >
+              {item === 'agenda'
+                ? 'Hours'
+                : item[0].toUpperCase() + item.slice(1)}
+            </button>
+          ),
+        )}
       </div>
+
       {view === 'week' && (
         <WeekGrid
           dates={week}
@@ -103,140 +249,308 @@ export function Timetable() {
           schedule={schedule}
           tasks={tasks}
           onEdit={setSelected}
-          onMove={(id, changes) => updateSchedule(id, changes)}
+          onMove={(id, changes) =>
+            updateSchedule(id, changes)
+          }
         />
-      )}{' '}
+      )}
+
       {view === 'day' && (
         <DayView
+          date={cursor}
           events={visible(cursor)}
-          tasks={tasks.filter((t) => t.due === localDate(cursor))}
+          tasks={tasks.filter(
+            (task) => task.due === localDate(cursor),
+          )}
         />
-      )}{' '}
+      )}
+
       {view === 'month' && (
         <MonthView
           days={calendarDays}
           cursor={cursor}
           events={visible}
           tasks={tasks}
-          onPick={(d) => {
-            setCursor(d);
+          onPick={(day) => {
+            setCursor(day);
             setView('day');
           }}
         />
-      )}{' '}
-      {view === 'agenda' && <Agenda start={cursor} events={visible} />}{' '}
-      {ai && <AISchedule onClose={() => setAi(false)} />}{' '}
+      )}
+
+      {view === 'agenda' && (
+        <Agenda
+          start={cursor}
+          events={visible}
+        />
+      )}
+
+      {ai && (
+        <AISchedule onClose={() => setAi(false)} />
+      )}
+
       {selected && (
-        <Modal title="Edit calendar session" onClose={() => setSelected(null)}>
+        <Modal
+          title="Edit calendar session"
+          onClose={() => {
+            setConfirmDelete(false);
+            setSelected(null);
+          }}
+        >
           <div style={{ display: 'grid', gap: 12 }}>
             <input
               className="input"
               value={selected.title}
-              onChange={(e) => setSelected({ ...selected, title: e.target.value })}
+              onChange={(event) =>
+                setSelected({
+                  ...selected,
+                  title: event.target.value,
+                })
+              }
             />
+
             <input
               className="input"
               type="date"
-              value={selected.date || localDate(addDays(weekStart(cursor), selected.day))}
-              onChange={(e) => {
-                const d = new Date(`${e.target.value}T00:00:00`);
-                setSelected({ ...selected, date: e.target.value, day: d.getDay() });
+              value={
+                selected.date ||
+                localDate(
+                  addDays(
+                    weekStart(cursor),
+                    selected.day,
+                  ),
+                )
+              }
+              onChange={(event) => {
+                const value = event.target.value;
+
+                if (!value) return;
+
+                const selectedDate = new Date(
+                  `${value}T00:00:00`,
+                );
+
+                setSelected({
+                  ...selected,
+                  date: value,
+                  day: selectedDate.getDay(),
+                });
               }}
             />
-            <div style={{ display: 'flex', gap: 8 }}>
+
+            <div
+              style={{
+                display: 'flex',
+                gap: 8,
+              }}
+            >
               <input
                 className="input"
                 type="time"
                 value={selected.start}
-                onChange={(e) => setSelected({ ...selected, start: e.target.value })}
+                onChange={(event) =>
+                  setSelected({
+                    ...selected,
+                    start: event.target.value,
+                  })
+                }
               />
+
               <input
                 className="input"
                 type="time"
                 value={selected.end}
-                onChange={(e) => setSelected({ ...selected, end: e.target.value })}
+                onChange={(event) =>
+                  setSelected({
+                    ...selected,
+                    end: event.target.value,
+                  })
+                }
               />
             </div>
-            <div style={{ display: 'flex', gap: 8 }}>
+
+            <div
+              style={{
+                display: 'flex',
+                gap: 8,
+                flexWrap: 'wrap',
+              }}
+            >
               <button
                 className="btn btn-primary"
                 onClick={() => {
+                  if (
+                    !selected.title.trim() ||
+                    mins(selected.end) <= mins(selected.start)
+                  ) {
+                    return;
+                  }
+
                   updateSchedule(selected.id, selected);
                   setSelected(null);
                 }}
               >
                 Save changes
               </button>
-              
-              <button className="btn btn-danger" onClick={() => setConfirmDelete(true)}>
-                              <Trash2
-                                size={15}
-                                style={{
-                                  verticalAlign: 'middle',
-                                }}
-                              />{' '}
-                              Delete
-                            </button>
+
+              <button
+                className="btn btn-danger"
+                onClick={() => setConfirmDelete(true)}
+              >
+                <Trash2
+                  size={15}
+                  style={{
+                    verticalAlign: 'middle',
+                  }}
+                />{' '}
+                Delete
+              </button>
             </div>
+
+            {confirmDelete && (
+              <div
+                style={{
+                  display: 'grid',
+                  gap: 8,
+                  padding: 12,
+                  border: '1px solid var(--border)',
+                  borderRadius: 10,
+                }}
+              >
+                <strong>
+                  Delete this calendar session?
+                </strong>
+
+                <span className="muted">
+                  This action cannot be undone.
+                </span>
+
+                <div
+                  style={{
+                    display: 'flex',
+                    gap: 8,
+                  }}
+                >
+                  <button
+                    className="btn btn-danger"
+                    onClick={handleDelete}
+                  >
+                    Yes, delete
+                  </button>
+
+                  <button
+                    className="btn btn-soft"
+                    onClick={() =>
+                      setConfirmDelete(false)
+                    }
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </Modal>
-      )}{' '}
+      )}
+
       {add && (
-        <Modal title="Add to calendar" onClose={() => setAdd(false)}>
+        <Modal
+          title="Add to calendar"
+          onClose={() => setAdd(false)}
+        >
           <form
             onSubmit={(event) => {
               event.preventDefault();
-              if (title) {
-                const chosen = new Date(`${date}T00:00:00`);
-                addSchedule({
-                  title,
-                  day: chosen.getDay(),
-                  date,
-                  start,
-                  end,
-                  kind: 'study',
-                  color: '#54a580',
-                  location: 'Calendar session',
-                });
-                setAdd(false);
+
+              const trimmedTitle = title.trim();
+
+              if (
+                !trimmedTitle ||
+                mins(end) <= mins(start)
+              ) {
+                return;
               }
+
+              const chosen = new Date(
+                `${date}T00:00:00`,
+              );
+
+              addSchedule({
+                title: trimmedTitle,
+                day: chosen.getDay(),
+                date,
+                start,
+                end,
+                kind: 'study',
+                color: '#54a580',
+                location: 'Calendar session',
+              });
+
+              resetAddForm();
+              setAdd(false);
             }}
-            style={{ display: 'grid', gap: 12 }}
+            style={{
+              display: 'grid',
+              gap: 12,
+            }}
           >
             <input
               autoFocus
               className="input"
               placeholder="Class, study session, or event"
               value={title}
-              onChange={(event) => setTitle(event.target.value)}
+              onChange={(event) =>
+                setTitle(event.target.value)
+              }
             />
+
             <input
               className="input"
               type="date"
               value={date}
-              onChange={(event) => setDate(event.target.value)}
+              onChange={(event) =>
+                setDate(event.target.value)
+              }
             />
-            <div style={{ display: 'flex', gap: 10 }}>
+
+            <div
+              style={{
+                display: 'flex',
+                gap: 10,
+              }}
+            >
               <input
                 className="input"
                 type="time"
                 value={start}
-                onChange={(event) => setStart(event.target.value)}
+                onChange={(event) =>
+                  setStart(event.target.value)
+                }
               />
+
               <input
                 className="input"
                 type="time"
                 value={end}
-                onChange={(event) => setEnd(event.target.value)}
+                onChange={(event) =>
+                  setEnd(event.target.value)
+                }
               />
             </div>
-            <button className="btn btn-primary">Add to calendar</button>
+
+            <button
+              className="btn btn-primary"
+              type="submit"
+            >
+              Add to calendar
+            </button>
           </form>
         </Modal>
       )}
     </Page>
   );
 }
+
 function WeekGrid({
   dates,
   today,
@@ -247,74 +561,178 @@ function WeekGrid({
 }: {
   dates: Date[];
   today: string;
-  schedule: any[];
-  tasks: any[];
-  onEdit: (item: any) => void;
-  onMove: (id: string, changes: Partial<ScheduleItem>) => void;
+  schedule: ScheduleItem[];
+  tasks: Array<{
+    id: string;
+    title: string;
+    due?: string;
+    status?: string;
+  }>;
+  onEdit: (item: ScheduleItem) => void;
+  onMove: (
+    id: string,
+    changes: Partial<ScheduleItem>,
+  ) => void;
 }) {
-  const now = new Date(),
-    current = now.getHours() * 60 + now.getMinutes();
+  const now = new Date();
+  const current =
+    now.getHours() * 60 + now.getMinutes();
+
   return (
     <div className="card timetable-card">
-      <div className="timetable-grid">
+      <div
+        className="timetable-grid"
+        style={{
+          minHeight: `${24 * HOUR_HEIGHT + 50}px`,
+        }}
+      >
         <div className="timetable-head">
           <div />
-          {dates.map((d, i) => (
+
+          {dates.map((date, index) => (
             <div
-              key={localDate(d)}
-              className={'day-head ' + (localDate(d) === today ? 'today' : '')}
+              key={localDate(date)}
+              className={
+                'day-head ' +
+                (localDate(date) === today
+                  ? 'today'
+                  : '')
+              }
             >
-              {names[i]}
-              <div>{d.getDate()}</div>
+              {names[index]}
+
+              <div>{date.getDate()}</div>
             </div>
           ))}
         </div>
-        <div className="timetable-body">
-          {[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24].map((hour) => (
-            <span className="hour" key={hour} style={{ top: (hour - 8) * 66 }}>
-              {hour}:00
-            </span>
-          ))}
-          {schedule.map((item) => {
-            const col = item.date ? dates.findIndex((d) => localDate(d) === item.date) : item.day;
-            if (col < 0) return null;
-            const isNow =
-              localDate(dates[col]) === today &&
-              mins(item.start) <= current &&
-              mins(item.end) > current;
-            return (
-              <EventBlock
-                key={item.id}
-                item={item}
-                col={col}
-                dates={dates}
-                active={isNow}
-                onEdit={onEdit}
-                onMove={onMove}
-              />
-            );
-          })}
-          {tasks
-            .filter(
-              (t) => t.due && dates.some((d) => localDate(d) === t.due) && t.status !== 'done',
-            )
-            .map((t) => {
-              const col = dates.findIndex((d) => localDate(d) === t.due);
-              return (
-                <div
-                  className="calendar-task"
-                  key={t.id}
-                  style={{ left: `calc(56px + (100% - 56px)/7 * ${col})` }}
+
+        <div
+          className="timetable-body"
+          style={{
+            height: `${24 * HOUR_HEIGHT}px`,
+            minHeight: `${24 * HOUR_HEIGHT}px`,
+            overflowY: 'auto',
+            overflowX: 'hidden',
+          }}
+        >
+          <div
+            className="timetable-hours"
+            aria-hidden="true"
+          >
+            {Array.from(
+              { length: 24 },
+              (_, hour) => (
+                <span
+                  className="hour"
+                  key={hour}
+                  style={{
+                    top: hour * HOUR_HEIGHT,
+                  }}
                 >
-                  • {t.title}
-                </div>
+                  {String(hour).padStart(2, '0')}:00
+                </span>
+              ),
+            )}
+          </div>
+
+          <div
+            className="timetable-events"
+            style={{
+              position: 'relative',
+              height: `${24 * HOUR_HEIGHT}px`,
+            }}
+          >
+            {Array.from(
+              { length: 25 },
+              (_, hour) => (
+                <div
+                  key={`line-${hour}`}
+                  style={{
+                    position: 'absolute',
+                    top: hour * HOUR_HEIGHT,
+                    left: 56,
+                    right: 0,
+                    borderTop:
+                      '1px solid var(--border)',
+                    pointerEvents: 'none',
+                  }}
+                />
+              ),
+            )}
+
+            {schedule.map((item) => {
+              const eventDate = getEventDate(
+                item,
+                dates[0],
+              );
+
+              const column = dates.findIndex(
+                (date) =>
+                  localDate(date) === eventDate,
+              );
+
+              if (column < 0) return null;
+
+              const startMinutes = mins(item.start);
+              const endMinutes = Math.min(
+                DAY_END,
+                mins(item.end),
+              );
+
+              const isNow =
+                localDate(dates[column]) === today &&
+                startMinutes <= current &&
+                endMinutes > current;
+
+              return (
+                <EventBlock
+                  key={item.id}
+                  item={item}
+                  col={column}
+                  dates={dates}
+                  active={isNow}
+                  onEdit={onEdit}
+                  onMove={onMove}
+                />
               );
             })}
+
+            {tasks
+              .filter(
+                (task) =>
+                  task.due &&
+                  dates.some(
+                    (date) =>
+                      localDate(date) === task.due,
+                  ) &&
+                  task.status !== 'done',
+              )
+              .map((task) => {
+                const column = dates.findIndex(
+                  (date) =>
+                    localDate(date) === task.due,
+                );
+
+                return (
+                  <div
+                    className="calendar-task"
+                    key={task.id}
+                    style={{
+                      position: 'absolute',
+                      left: `calc(56px + (100% - 56px) / 7 * ${column})`,
+                    }}
+                  >
+                    • {task.title}
+                  </div>
+                );
+              })}
+          </div>
         </div>
       </div>
     </div>
   );
 }
+
 function EventBlock({
   item,
   col,
@@ -323,16 +741,36 @@ function EventBlock({
   onEdit,
   onMove,
 }: {
-  item: any;
+  item: ScheduleItem;
   col: number;
   dates: Date[];
   active: boolean;
-  onEdit: (item: any) => void;
-  onMove: (id: string, changes: Partial<ScheduleItem>) => void;
+  onEdit: (item: ScheduleItem) => void;
+  onMove: (
+    id: string,
+    changes: Partial<ScheduleItem>,
+  ) => void;
 }) {
-  const top = (mins(item.start) - 480) * 1.1,
-    height = (mins(item.end) - mins(item.start)) * 1.1;
-  const [offset, setOffset] = useState({ x: 0, y: 0 });
+  const startMinutes = mins(item.start);
+  const endMinutes = Math.min(
+    DAY_END,
+    mins(item.end),
+  );
+
+  const top =
+    startMinutes * PIXELS_PER_MINUTE;
+
+  const height = Math.max(
+    (endMinutes - startMinutes) *
+      PIXELS_PER_MINUTE,
+    34,
+  );
+
+  const [offset, setOffset] = useState({
+    x: 0,
+    y: 0,
+  });
+
   const drag = useRef<{
     pointerId: number;
     startX: number;
@@ -341,63 +779,155 @@ function EventBlock({
     body: HTMLElement;
     moved: boolean;
   } | null>(null);
+
   const ignoreClick = useRef(false);
-  const beginDrag = (event: React.PointerEvent<HTMLButtonElement>) => {
+
+  const beginDrag = (
+    event: React.PointerEvent<HTMLButtonElement>,
+  ) => {
     if (event.button !== 0) return;
-    const body = event.currentTarget.closest('.timetable-body');
+
+    const body =
+      event.currentTarget.closest(
+        '.timetable-body',
+      );
+
     if (!(body instanceof HTMLElement)) return;
-    const bounds = event.currentTarget.getBoundingClientRect();
-    event.currentTarget.setPointerCapture(event.pointerId);
+
+    const bounds =
+      event.currentTarget.getBoundingClientRect();
+
+    event.currentTarget.setPointerCapture(
+      event.pointerId,
+    );
+
     drag.current = {
       pointerId: event.pointerId,
       startX: event.clientX,
       startY: event.clientY,
-      grabOffsetY: event.clientY - bounds.top,
+      grabOffsetY:
+        event.clientY - bounds.top,
       body,
       moved: false,
     };
   };
-  const moveDrag = (event: React.PointerEvent<HTMLButtonElement>) => {
+
+  const moveDrag = (
+    event: React.PointerEvent<HTMLButtonElement>,
+  ) => {
     const current = drag.current;
-    if (!current || current.pointerId !== event.pointerId) return;
-    const deltaX = event.clientX - current.startX;
-    const deltaY = event.clientY - current.startY;
-    if (Math.abs(deltaX) > 4 || Math.abs(deltaY) > 4) current.moved = true;
-    if (current.moved) setOffset({ x: deltaX, y: deltaY });
+
+    if (
+      !current ||
+      current.pointerId !== event.pointerId
+    ) {
+      return;
+    }
+
+    const deltaX =
+      event.clientX - current.startX;
+
+    const deltaY =
+      event.clientY - current.startY;
+
+    if (
+      Math.abs(deltaX) > 4 ||
+      Math.abs(deltaY) > 4
+    ) {
+      current.moved = true;
+    }
+
+    if (current.moved) {
+      setOffset({
+        x: deltaX,
+        y: deltaY,
+      });
+    }
   };
-  const finishDrag = (event: React.PointerEvent<HTMLButtonElement>) => {
+
+  const finishDrag = (
+    event: React.PointerEvent<HTMLButtonElement>,
+  ) => {
     const current = drag.current;
-    if (!current || current.pointerId !== event.pointerId) return;
+
+    if (
+      !current ||
+      current.pointerId !== event.pointerId
+    ) {
+      return;
+    }
+
     drag.current = null;
     setOffset({ x: 0, y: 0 });
+
     if (!current.moved) return;
 
     ignoreClick.current = true;
+
     window.setTimeout(() => {
       ignoreClick.current = false;
     }, 0);
 
-    const bounds = current.body.getBoundingClientRect();
-    const columnWidth = (bounds.width - 56) / 7;
+    const bounds =
+      current.body.getBoundingClientRect();
+
+    const columnWidth =
+      (bounds.width - 56) / 7;
+
     const nextColumn = Math.max(
       0,
-      Math.min(6, Math.floor((event.clientX - bounds.left - 56) / columnWidth)),
+      Math.min(
+        6,
+        Math.floor(
+          (event.clientX -
+            bounds.left -
+            56) /
+            columnWidth,
+        ),
+      ),
     );
-    const duration = mins(item.end) - mins(item.start);
-    const dropTop = event.clientY - bounds.top - current.grabOffsetY;
-    const snappedStart = 480 + Math.round(dropTop / 33) * 30;
-    const nextStart = Math.max(480, Math.min(960 - duration, snappedStart));
+
+    const duration =
+      endMinutes - startMinutes;
+
+    const dropTop =
+      event.clientY -
+      bounds.top +
+      current.body.scrollTop -
+      current.grabOffsetY;
+
+    // Snap to 30 minutes.
+    const snappedStart =
+      Math.round(
+        dropTop /
+          (30 * PIXELS_PER_MINUTE),
+      ) *
+      30;
+
+    const nextStart = Math.max(
+      DAY_START,
+      Math.min(
+        DAY_END - duration,
+        snappedStart,
+      ),
+    );
+
     const nextDate = dates[nextColumn];
-    const toTime = (minutes: number) =>
-      `${String(Math.floor(minutes / 60)).padStart(2, '0')}:${String(minutes % 60).padStart(2, '0')}`;
 
     onMove(item.id, {
       day: nextDate.getDay(),
-      start: toTime(nextStart),
-      end: toTime(nextStart + duration),
-      ...(item.date ? { date: localDate(nextDate) } : {}),
+      start: timeFromMinutes(nextStart),
+      end: timeFromMinutes(
+        nextStart + duration,
+      ),
+      ...(item.date
+        ? {
+            date: localDate(nextDate),
+          }
+        : {}),
     });
   };
+
   return (
     <button
       type="button"
@@ -409,59 +939,123 @@ function EventBlock({
         setOffset({ x: 0, y: 0 });
       }}
       onClick={() => {
-        if (!ignoreClick.current) onEdit(item);
+        if (!ignoreClick.current) {
+          onEdit(item);
+        }
       }}
-      className={'timetable-event ' + (active ? 'active ' : '') }
+      className={
+        'timetable-event ' +
+        (active ? 'active ' : '')
+      }
       style={{
-        left: `calc(56px + (100% - 56px)/7 * ${col})`,
+        position: 'absolute',
+        left: `calc(56px + (100% - 56px) / 7 * ${col})`,
         top,
-        width: 'calc((100% - 56px)/7 - 8px)',
-        height: Math.max(height, 34),
+        width:
+          'calc((100% - 56px) / 7 - 8px)',
+        height,
         borderColor: item.color,
-        background: item.color + '26',
+        background: `${item.color}26`,
         transform:
-          offset.x || offset.y ? `translate(${offset.x}px, ${offset.y}px) scale(1.03)` : undefined,
+          offset.x || offset.y
+            ? `translate(${offset.x}px, ${offset.y}px) scale(1.03)`
+            : undefined,
       }}
     >
       <b>{item.title}</b>
+
       <span>
         {item.start}–{item.end}
       </span>
+
       {active && <em>Now</em>}
     </button>
   );
 }
-function DayView({ events, tasks }: { events: any[]; tasks: any[] }) {
+
+function DayView({
+  date,
+  events,
+  tasks,
+}: {
+  date: Date;
+  events: ScheduleItem[];
+  tasks: Array<{
+    id: string;
+    title: string;
+  }>;
+}) {
   return (
     <section className="card day-view">
-      {[8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18].map((hour) => (
-        <div className="day-hour" key={hour}>
-          <span>{hour}:00</span>
-          <div>
-            {events
-              .filter((x) => Math.floor(mins(x.start) / 60) === hour)
-              .map((x) => (
-                <article key={x.id} style={{ borderColor: x.color }}>
-                  <b>{x.title}</b>
-                  <small>
-                    {x.start}–{x.end}
-                  </small>
-                </article>
-              ))}
-          </div>
-        </div>
-      ))}
+      <div
+        style={{
+          maxHeight: '70vh',
+          overflowY: 'auto',
+        }}
+      >
+        {Array.from(
+          { length: 24 },
+          (_, hour) => (
+            <div
+              className="day-hour"
+              key={hour}
+            >
+              <span>
+                {String(hour).padStart(2, '0')}:00
+              </span>
+
+              <div>
+                {events
+                  .filter(
+                    (event) =>
+                      Math.floor(
+                        mins(event.start) / 60,
+                      ) === hour,
+                  )
+                  .map((event) => (
+                    <article
+                      key={event.id}
+                      style={{
+                        borderColor: event.color,
+                      }}
+                    >
+                      <b>{event.title}</b>
+
+                      <small>
+                        {event.start}–{event.end}
+                      </small>
+                    </article>
+                  ))}
+              </div>
+            </div>
+          ),
+        )}
+      </div>
+
       {tasks.length > 0 && (
         <div className="day-tasks">
-          <b>Tasks due today</b>
-          {tasks.map((t) => (
-            <span key={t.id}>• {t.title}</span>
+          <b>
+            Tasks due on{' '}
+            {new Intl.DateTimeFormat(
+              undefined,
+              {
+                month: 'short',
+                day: 'numeric',
+              },
+            ).format(date)}
+          </b>
+
+          {tasks.map((task) => (
+            <span key={task.id}>
+              • {task.title}
+            </span>
           ))}
         </div>
       )}
     </section>
   );
 }
+
 function MonthView({
   days,
   cursor,
@@ -471,37 +1065,66 @@ function MonthView({
 }: {
   days: Date[];
   cursor: Date;
-  events: (d: Date) => any[];
-  tasks: any[];
-  onPick: (d: Date) => void;
+  events: (date: Date) => ScheduleItem[];
+  tasks: Array<{
+    id: string;
+    title: string;
+    due?: string;
+  }>;
+  onPick: (date: Date) => void;
 }) {
   return (
     <section className="card month-view">
       <div className="month-head">
-        {names.map((d) => (
-          <b key={d}>{d}</b>
+        {names.map((day) => (
+          <b key={day}>{day}</b>
         ))}
       </div>
+
       <div className="month-grid">
-        {days.map((d) => {
-          const inMonth = d.getMonth() === cursor.getMonth(),
-            items = events(d),
-            due = tasks.filter((t) => t.due === localDate(d));
+        {days.map((date) => {
+          const inMonth =
+            date.getMonth() === cursor.getMonth() &&
+            date.getFullYear() ===
+              cursor.getFullYear();
+
+          const items = events(date);
+
+          const due = tasks.filter(
+            (task) =>
+              task.due === localDate(date),
+          );
+
           return (
             <button
-              className={!inMonth ? 'muted-day' : ''}
-              onClick={() => onPick(d)}
-              key={localDate(d)}
+              className={
+                !inMonth ? 'muted-day' : ''
+              }
+              onClick={() => onPick(date)}
+              key={localDate(date)}
             >
-              <span>{d.getDate()}</span>
-              {items.slice(0, 2).map((x) => (
-                <i key={x.id} style={{ background: x.color }}>
-                  {x.title}
-                </i>
-              ))}
-              {due.slice(0, 1).map((x) => (
-                <em key={x.id}>• {x.title}</em>
-              ))}
+              <span>{date.getDate()}</span>
+
+              {items
+                .slice(0, 2)
+                .map((event) => (
+                  <i
+                    key={event.id}
+                    style={{
+                      background: event.color,
+                    }}
+                  >
+                    {event.title}
+                  </i>
+                ))}
+
+              {due
+                .slice(0, 1)
+                .map((task) => (
+                  <em key={task.id}>
+                    • {task.title}
+                  </em>
+                ))}
             </button>
           );
         })}
@@ -509,32 +1132,57 @@ function MonthView({
     </section>
   );
 }
-function Agenda({ start, events }: { start: Date; events: (d: Date) => any[] }) {
-  const days = Array.from({ length: 14 }, (_, i) => addDays(start, i));
+
+function Agenda({
+  start,
+  events,
+}: {
+  start: Date;
+  events: (date: Date) => ScheduleItem[];
+}) {
+  const days = Array.from(
+    { length: 14 },
+    (_, index) => addDays(start, index),
+  );
+
   return (
     <section className="card agenda-view">
-      {days.map((d) => (
-        <div key={localDate(d)}>
+      {days.map((date) => (
+        <div key={localDate(date)}>
           <h3>
-            {new Intl.DateTimeFormat(undefined, {
-              weekday: 'long',
-              month: 'short',
-              day: 'numeric',
-            }).format(d)}
+            {new Intl.DateTimeFormat(
+              undefined,
+              {
+                weekday: 'long',
+                month: 'short',
+                day: 'numeric',
+              },
+            ).format(date)}
           </h3>
-          {events(d).length ? (
-            events(d).map((x) => (
-              <article key={x.id} style={{ borderColor: x.color }}>
+
+          {events(date).length ? (
+            events(date).map((event) => (
+              <article
+                key={event.id}
+                style={{
+                  borderColor: event.color,
+                }}
+              >
                 <b>
-                  {x.start} · {x.title}
+                  {event.start} · {event.title}
                 </b>
+
                 <span>
-                  {x.end} · {x.location || 'Scheduled'}
+                  {event.end} ·{' '}
+                  {event.location ||
+                    'Scheduled'}
                 </span>
               </article>
             ))
           ) : (
-            <p className="muted">Nothing scheduled</p>
+            <p className="muted">
+              Nothing scheduled
+            </p>
           )}
         </div>
       ))}
