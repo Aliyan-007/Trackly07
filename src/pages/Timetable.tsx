@@ -55,6 +55,10 @@ export function Timetable() {
       start = weekStart(first);
     return Array.from({ length: 42 }, (_, i) => addDays(start, i));
   }, [cursor]);
+  function setConfirmDelete(arg0: boolean): void {
+    throw new Error('Function not implemented.');
+  }
+
   return (
     <Page
       title="Calendar"
@@ -163,18 +167,16 @@ export function Timetable() {
               >
                 Save changes
               </button>
-              <button
-                className="btn"
-                style={{ background: '#f9eeee', color: '#a84c42' }}
-                onClick={() => {
-                  if (confirm('Delete this calendar session?')) {
-                    deleteSchedule(selected.id);
-                    setSelected(null);
-                  }
-                }}
-              >
-                Delete
-              </button>
+              
+              <button className="btn btn-danger" onClick={() => setConfirmDelete(true)}>
+                              <Trash2
+                                size={15}
+                                style={{
+                                  verticalAlign: 'middle',
+                                }}
+                              />{' '}
+                              Delete
+                            </button>
             </div>
           </div>
         </Modal>
@@ -268,7 +270,7 @@ function WeekGrid({
           ))}
         </div>
         <div className="timetable-body">
-          {[8, 9, 10, 11, 12, 13, 14, 15].map((hour) => (
+          {[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24].map((hour) => (
             <span className="hour" key={hour} style={{ top: (hour - 8) * 66 }}>
               {hour}:00
             </span>
@@ -409,7 +411,7 @@ function EventBlock({
       onClick={() => {
         if (!ignoreClick.current) onEdit(item);
       }}
-      className={'timetable-event ' + (active ? 'active ' : '') + (drag.current ? 'dragging' : '')}
+      className={'timetable-event ' + (active ? 'active ' : '') }
       style={{
         left: `calc(56px + (100% - 56px)/7 * ${col})`,
         top,
