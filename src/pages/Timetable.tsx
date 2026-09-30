@@ -2,7 +2,7 @@ import { useMemo, useRef, useState } from 'react';
 import { Page } from '../layouts/AppLayout';
 import { useTracklyStore } from '../stores/useTracklyStore';
 import { Modal } from '../components/ui/Modal';
-import { Plus, ChevronLeft, ChevronRight } from '../components/shared/Icons';
+import { Plus, ChevronLeft, ChevronRight, Trash2 } from '../components/shared/Icons';
 import { AISchedule } from '../components/timetable/AISchedule';
 import type { ScheduleItem } from '../types';
 import { localDate } from '../utils/date';
